@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>老高的表格案例</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-8">
+          <div class="page-header">
+            <h1>表格案例 <small>Follow me!!!</small></h1>
+          </div>
+          <!-- 添加框 -->
+          <div class="form-inline">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="请输入你理想的公司"
+              />
+            </div>
+            <button class="btn btn-success" type="submit">添加</button>
+          </div>
+          <!-- 搜索框 -->
+          <div class="form-inline" style="margin: 20px 0">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="搜索关键字"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <table class="table table-hover">
+            <thead>
+              <th>#</th>
+              <th>公司名称</th>
+              <th>事件</th>
+              <th>操作</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>阿里巴巴</td>
+                <td>2020/2/17 23:20</td>
+                <td>
+                  <a href="#">删除</a>
+                </td>
+              </tr>
+			      <tr>
+                <td colspan="4" style="color:#999">没有任何数据</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
