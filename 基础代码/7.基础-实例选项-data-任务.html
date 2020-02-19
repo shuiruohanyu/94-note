@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>高丽茹:{{ message }}</p>
+        <p>就业薪资: {{ money }}</p>
+        <p>福布斯排行榜: {{ list }}</p>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: '天生我才必有用',
+                money: 13000,
+                list: ["盖茨", "巴菲特", "贝索斯"]
+            },
+            methods: {
+
+            }
+        });
+        console.log(vm.message);
+        console.log(vm.money);
+        console.log(vm.list);
+        vm.message = '千金散去还复来'
+        vm.money = 15000
+        vm.list = ["盖茨", "巴菲特", "贝索斯", "高丽茹"]
+    </script>
+</body>
+
+</html>

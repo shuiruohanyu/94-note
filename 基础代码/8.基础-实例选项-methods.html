@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '高丽茹-朱祥亮'
+            },
+            methods: {
+                // 多个方法
+                // getName() { } es6写法
+                //  getName: function () { }  es5写法
+                getName() {
+                    // this 指向vm实例
+                    // this.getName2()
+                    console.log(this)
+
+                },
+                getName2() {
+                    alert("大家饿了没有, 老高讲课是不是很无趣")
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

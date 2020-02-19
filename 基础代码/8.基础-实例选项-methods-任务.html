@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                alipay: '支付宝',
+                wechat: '腾讯'
+            },
+            methods: {
+                fn1() {
+                    // this指向vm实例  vm.alipay
+                    console.log(this.alipay)
+                },
+                fn2() {
+                    console.log(this.wechat)
+                }
+            }
+        });
+    </script>
+</body>
+<!-- 
+ 1. 实例化一个Vue实例, 
+2. 定义两个属性  alipay   wechat    初始值分别为  支付宝    腾讯
+3. 定义两个方法 fn1 fn2  两个方法中分别输出 alipay   和 wechat    的值
+ -->
+
+</html>

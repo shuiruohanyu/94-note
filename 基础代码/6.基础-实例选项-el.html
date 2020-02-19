@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body id="body">
+    <div id="app" class='ninefour'>
+        <!-- 只能在这个里面 才能使用Vue特性 -->
+        <!-- <p>{{ msg }}</p> -->
+        <!-- <p>{{ msg1 }}</p> -->
+        <!-- <p>{{ msg2 }}</p> -->
+        <p>{{ msg3 }}</p>
+    </div>
+
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            // el: '#app', // 指的是Vue实例所管理的视图
+            // el: '.ninefour', // class选择器
+            // el: 'div', // 标签选择器
+            // el: document.getElementById("app"), // dom对象
+            el: '#app',
+            data: {
+                name: '高丽茹是个大美女',
+                msg: '跟紧老高小步跑',
+                msg1: 'vuejs真奇妙',
+                msg2: 'Vuejs真是横!',
+                msg3: '今天写个demo瞧一瞧'
+
+            },
+            methods: {}
+        });
+        //  实例 和视图是1对1的
+        // var vm1 = new Vue({
+        //     el: "#app1",
+        //     data: {
+        //         name: '老高,你真的太坏了'
+        //     }
+        // })
+        // var vm2 = new Vue({})
+        // var vm3 = new Vue({})
+    </script>
+</body>
+
+</html>

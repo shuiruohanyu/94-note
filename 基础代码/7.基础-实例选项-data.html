@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 要求在 视图中 使用的变量必须在data中定义 不定义就会报错  -->
+        <p>{{ name }}</p>
+        <p>{{ height }}</p>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '高丽茹同学很漂亮',
+                height: ""
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
