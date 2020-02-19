@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 为所欲为 -->
+        <!-- 1  纯变量形式 -->
+        <!-- {{ name }} -->
+        <p>名字:{{ name }}</p>
+        <!-- 2 赋值形式 -->
+        <p>{{ name = '朱祥亮' }}</p>
+        <!-- 3 逻辑判断  -->
+        <p>{{ money > 8000  }}</p>
+        <!-- 4 逻辑运算 -->
+        <p>{{ money - house }}</p>
+        <!-- 5 方法调用 需要小括号 -->
+        <p>{{ getName() }}</p>
+        <!--6 三元表达式 -->
+        <p>{{ money > 10000 ? '入职' : '离职' }}</p>
+
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '张磊',
+                money: 10000, // 工资
+                house: 3000  // 房租
+            },
+            methods: {
+                // 获取名称
+                getName() {
+                    return "卖猪肉的"
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

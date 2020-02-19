@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 插值表达式 -->
+        <p>知道前端的水有多深吗</p>
+        <p>{{ msg + '知道前端的水有多深吗' }}</p>
+        <p>{{ msg }} 知道前端的水有多深吗</p>
+        <p>{{ showMessage }}</p>
+        <p>321</p>
+        <!-- 死循环 -->
+        <!-- <p>{{ list.reverse().join('') }}</p> -->
+        <p>{{ reverseList()  }}</p>
+        <p>{{ list.join("").split("").reverse().join("")  }}</p>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '王际霖',
+                showMessage: false,
+                list: [1, 2, 3]
+            },
+            methods: {
+                reverseList() {
+                    // this指向 vm实例
+                    let newArr = [...this.list] // ... 延展运算法 得到一个新数组 和原数组没半毛钱关系
+                    return newArr.reverse().join("")
+                }
+            }
+        });
+    </script>
+</body>
+<!-- 
+1. 初始化一个Vue实例
+2. 在data中定义  msg :  我要成为前端程序员  showMessage: false, 数组: [1,2,3]
+3. 要求根据data中的数据用插值表达式输出   知道前端的水有多深吗,  false,   321（**`特别注意`**）
+ -->
+
+</html>
