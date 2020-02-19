@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .light {
+            width: 100%;
+            height: 100vh;
+            background-color: aqua;
+            /* 1vh 就是当前可视区域的竖直高度的百分之一 */
+        }
+
+        .night {
+            width: 100%;
+            height: 100vh;
+            background-color: blueviolet;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="openLight()">开/关</button>
+    <div id="app">
+        <!-- 开灯 -->
+        <!-- 条件渲染 v-if -->
+        <div v-if="light" class='light'></div>
+        <!-- 关灯 -->
+        <!-- <div v-if="!light" class='night'></div> -->
+        <!-- v-else写法 -->
+        <div v-else class='night'></div>
+        <!-- <div v-show="light" class='light'></div>
+        <div v-show="!light" class='night'></div> -->
+        <!--  v-show 后面的值 true  显示 false  => css display:none -->
+
+        <!-- 但凡是代码重复写两遍 你就要考虑 有没有更好的方式 -->
+        <!-- template 不生成任何实质的标签 -->
+        <template v-if="showMessage">
+            <p>2020年是不平凡的一年</p>
+            <p>对于94期前端的人尤其不平凡</p>
+            <p>因为他们在学vuejs的过程中遇到了老高</p>
+            <p>他们可能会因为这一段偶遇改变自己的命运</p>
+        </template>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                light: true, // light 为true表示开灯状态 light false表示 关灯状态
+                showMessage: false // 显示信息
+            },
+            methods: {}
+        });
+        // 开灯
+        function openLight() {
+            vm.light = !vm.light // 数据变化  => 视图更新
+        }
+    </script>
+</body>
+
+</html>

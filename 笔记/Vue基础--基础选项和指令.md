@@ -263,41 +263,42 @@
 >
 >> 很像innerText和innerHTML
 >
->- v-text:更新标签中的内容
+>- v-text:更新标签中的文本内容
 >
-> - v-text和插值表达式的区别
->   - v-text  更新**`整个`**标签中的内容
->   - 插值表达式: 更新标签中**`局部`**的内容
+>- v-text和插值表达式的区别
+>  - v-text  更新**`整个`**标签中的内容
+>  - 插值表达式: 更新标签中**`局部`**的内容
 >
 >- v-html:更新标签中的内容/标签
 >
-> - 可以渲染内容中的HTML标签
-> - 注意:尽量避免使用，容易造成危险 (XSS跨站脚本攻击)
+>- 可以渲染内容中的HTML标签
+>- 注意:尽量避免使用，容易造成危险 , 因为 可以注入html标签就意味着 可以 写入script标签, 有可能造成 被不法分子共计
 >
-> ```html
+>```html
 > <div id="app">
->         <!-- v-text指令的值会替换标签内容 -->
->         <p>{{str}}</p>
->         <p v-text="str"></p>
->         <p v-text="str">我是p标签中的内容</p>
->         <p v-text="strhtml">我是p标签中的内容</p>
->         <p v-html="str"></p>
->         <!-- v-html指令的值(包括标签字符串)会替换掉标签的内容 -->
->         <p v-html="strhtml">我是p标签中的内容</p>
->     </div>
->     <script src="./vue.js"></script>
->     <script>
->         new Vue({
->             el: '#app',
->             data: {
->                 str: 'abc',
->                 strhtml: '<span>content</span>'
->             }
->         });
->     </script>
-> ```
+>        <!-- 插值表达式 局部替换内容-->
+>        <p>肖战: {{ content }}</p>
+>        <!-- 指令 v-text是替换标签内的所有内容 -->
+>        <p v-text="content">
+>            肖战 是程老师的偶像
+>        </p>
+>        <div v-text="contentHtml"></div>
+>        <div v-html="contentHtml"></div>
+>    </div>
+>    <script src="./vue.js"></script>
+>    <script>
+>        var vm = new Vue({
+>            el: '#app',
+>            data: {
+>                content: '长得好看的人如果能力强,就不可阻挡',
+>                contentHtml: `<span style="font-size: 20px; color:blue"> 肖战同学如此欢迎 </span>`
+>            },
+>            methods: {}
+>        });
+>    </script>
+>```
 >
-> 
+>
 >
 >**`任务`**
 >
@@ -309,35 +310,54 @@
 
 ## 基础-系统指令-v-if 和 v-show
 
-> **`目标`**:掌握条件渲染指令的两种方式
+> **`目标`**:掌握**`条件渲染`**指令的两种方式
+>
+> ​     根据条件决定内容的显示与否
 >
 > * 场景:  需要根据条件决定 元素是否显示  使用以上指令
->
 > * 使用: v-if 和 v-show 后面的表达式返回的布尔值 来决定 该元素显示隐藏
->
 > * **注意** :   **`v-if 是直接决定元素 的 添加 或者删除  而 v-show 只是根据样式来决定 显示隐藏`**
 >
+> v-if  可以 和 v-else 并用  
+>
+> * 如果 v-if 的表达式为 true, v-else 这个元素就不会渲染
+> * 如果v-if的表达式 为false    v-else 这个元素就会渲染
+>
 > ```html
-> <div id="app">
->      <!-- 如果isShow的值是true ,就显示p标签 -->
->      <p v-if="isShow">我是p标签中的内容</p>
->      <p v-show="isShow">我是p标签中的内容</p>
->      <!-- 如果标签显示与隐藏切换频繁, 就使用v-show 
->          v-show本质是通过修改标签的display值
->      -->
->  </div>
->  <script src="./vue.js"></script>
->  <script>
->      new Vue({
->          el: '#app',
->          data: {
->              isShow: false
->          }
->      });
->  </script>
+>     <button onclick="openLight()">开/关</button>
+>     <div id="app">
+>         <!-- 开灯 -->
+>         <!-- 条件渲染 v-if -->
+>         <!-- <div v-if="light" class='light'></div> -->
+>         <!-- 关灯 -->
+>         <!-- <div v-if="!light" class='night'></div> -->
+>         <!-- v-else写法 -->
+>         <!-- <div v-else class='night'></div> -->
+>         <div v-show="light" class='light'></div>
+>         <div v-show="!light" class='night'></div>
+> 
+>     </div>
+>     <script src="./vue.js"></script>
+>     <script>
+>         var vm = new Vue({
+>             el: '#app',
+>             data: {
+>                 light: true // light 为true表示开灯状态 light false表示 关灯状态
+>             },
+>             methods: {}
+>         });
+>         // 开灯
+>         function openLight() {
+>             vm.light = !vm.light // 数据变化  => 视图更新
+>         }
+>     </script>
 > ```
 >
+> v-if决定元素是否删除或者增加 v-show决定元素 的样式 是否是display:none
+>
 > `v-if` 有更高的切换开销，而 `v-show` 有更高的初始渲染开销。
+>
+> 一般来说, 用v-if 的 频率比v-show要多
 >
 > 因此，如果需要非常频繁地切换，则使用 `v-show` 较好；
 >
