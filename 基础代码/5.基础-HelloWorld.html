@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 1. 设置Vue所管理的视图 -->
+    <div id="app">
+        <!-- 5. 在视图中 通过 {{}} 使用data中定义的数据 -->
+        <p> 名字:{{ name }} </p>
+        <p>体重: {{ weight  }}</p>
+        <div>
+            头发: {{ hair }}
+        </div>
+        <span style="font-size: 20px; color: red; font-weight: bold;"> {{ name2 }} </span>
+    </div>
+    <!-- 2. 引入vue.js 这个时候就有了一个全局对象  Vue -->
+    <script src="./vue.js"></script>
+    <!-- 3. 实例化 Vue对象 -->
+    <script>
+        // 实例化对象 es5代码 let/const  => var => 编译 => es5
+        // 4. 设置实例选项 el / data
+        var vm = new Vue({
+            // 构造函数的参数
+            el: '#app', // 指的是 管理视图的选择器
+            data: {
+                // 响应式数据 key:value
+                name: '我是朱祥亮',
+                weight: "200kg",
+                hair: '1000根',
+                name2: '高丽茹'
+            }
+        })  
+    </script>
+</body>
+
+</html>
