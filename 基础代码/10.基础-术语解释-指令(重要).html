@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{ name }}</p>
+        <!-- v-text指令 将 v-text="表达式" 表达式内容 赋值给 元素-->
+        <div v-text="name"></div>
+        <div v-text="'老高讲的一点都不nice'"></div>
+        <div v-text="city"></div>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '老高-今天讲的很nice!',
+                city: '北京-北平-首都-政治中心'
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
