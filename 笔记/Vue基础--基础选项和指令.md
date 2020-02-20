@@ -788,9 +788,65 @@ v-model是Vuejs双向数据流的体现
 >
 >  表单元素:  input  textarea checkbox radio  select 
 >
->  **注意**  checkbox在input标签中需要给定value值
+>  checkbox绑定 有两种模式  1.布尔值 2.数组
+>
+>  **`注意`**  checkbox 在**`多选情况下`**在input标签中需要给定value值
+>
+>  radio 在多个的时候 也需要给value值
 >
 >  所有表单元素一旦绑定了 v-model  就会忽略掉 原有的value值 checked值 selected值  需要从数据对象中取默认值
+>
+>  ```vue
+>  <div id="app">
+>          <!-- input的双向绑定 -->
+>          <p>{{ nameInput }}</p>
+>          <input type="text" v-model="nameInput">
+>          <!-- textarea的绑定 -->
+>          <p>{{ nameTextArea }}</p>
+>          <textarea v-model="nameTextArea" name="" id="" cols="30" rows="10"></textarea>
+>          <!-- checkbox 布尔值 -->
+>          <p>{{ nameCheckbox }}</p>
+>          <input type="checkbox" v-model="nameCheckbox" name="" id="">结婚了没
+>          <!-- checkbox 多个的时候 数组 -->
+>          <p>{{ nameCheckboxs }}</p>
+>          <input type="checkbox" name="" id="" value="xz" v-model="nameCheckboxs">肖战
+>          <input type="checkbox" name="" id="" value="wyb" v-model="nameCheckboxs">王一博
+>          <input type="checkbox" name="" id="" value="czy" v-model="nameCheckboxs">陈志远
+>          <input type="checkbox" name="" id="" value="lzx" v-model="nameCheckboxs">罗志祥
+>          <!-- radio的绑定 -->
+>          <p>{{ nameRadio }}</p>
+>          <input type="radio" name="" id="" value="man" v-model="nameRadio"> 男
+>          <input type="radio" name="" id="" value="women" v-model="nameRadio"> 女
+>          <input type="radio" name="" id="" value="mar" v-model="nameRadio"> 火星人
+>          <!--  select的绑定 -->
+>          <p>{{ nameSelect }}</p>
+>          <select name="" id="" v-model="nameSelect">
+>              <option value=""></option>
+>              <option value="client">前端</option>
+>              <option value="server">后端</option>
+>              <option value="ui">UI</option>
+>              <option value="test">测试</option>
+>              <option value="services">运维</option>
+>          </select>
+>      </div>
+>      <script src="./vue.js"></script>
+>      <script>
+>          var vm = new Vue({
+>              el: '#app',
+>              data: {
+>                  nameInput: 'input的值',
+>                  nameTextArea: 'textarea的值',
+>                  nameCheckbox: false, // 1 布尔值
+>                  nameCheckboxs: ['xz', 'lzx'], // 多个checkboxv-model绑定的时候 是一个数组
+>                  nameRadio: 'mar', // 设置radio的选项
+>                  nameSelect: 'client'  // 前端/后端/数据库/UI/测试/运维
+>              },
+>              methods: {}
+>          });
+>      </script>
+>  ```
+>
+>  
 >
 >  **`任务`**:
 >
