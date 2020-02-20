@@ -450,9 +450,9 @@
 
 >**`目标`**:掌握v-for循环数组的用法 
 >
->* 根据一组数组或对象的选项列表进行渲染。
+>* v-for 可以 根据一组数组或对象的选项列表进行渲染。
 >* `v-for` 指令需要使用 `item in items` 或者 `item of items` 形式的特殊语法，
->* `items` 是源数据数组 /对象
+>* `items` 是源数据数组 /对象,来源于 data中的变量或者 计算属性中变量 props变量
 >* **`循环生成谁,就在谁的标签上写v-for指令`**
 >
 >当要渲染相似的标签结构时用v-for
@@ -466,40 +466,57 @@
 >**`注意`** v-for写的位置 应该是重复的标签上  不是其父级元素上 需要注意
 >
 >```html
-><!DOCTYPE html>
->  <html lang="en">
->   
->  <head>
->           <meta charset="UTF-8">
->           <meta name="viewport" content="width=device-width, initial-scale=1.0">
->           <meta http-equiv="X-UA-Compatible" content="ie=edge">
->           <title>Document</title>
->       </head>
->    
->  <body>
->           <div id="app">
->               <!-- v-for作用:列表渲染,当遇到相似的标签结构时,就用v-for去渲染
->                   v-for="数组中的元素 in data中的数组名"
->               -->
->               <!-- 数组 -->	
->               <p v-for="item in list">{{item}}</p>
->           </div>
->           <script src="./vue.js"></script>
->           <script>
->               new Vue({
->                   el: '#app',
->                   data: {
->                       list: ['a', 'b', 'c'],
->                   },
->                   methods: {
->    
->              }
->               })
->           </script>
->       </body>
->    
-> </html>
+>  <div id="app">
+>        <!-- 男生的梦中情人 -->
+>        <ul>
+>            <!-- v-for指令 item(自定义的一个变量名) in items(data中的变量) -->
+>            <!-- 循环生成谁就在谁的标签上写v-for -->
+>            <li v-for="(abc, index) in list">
+>                <div>
+>                    <span>94期男生的梦中情人:</span>排名第 {{ index + 1 }} 位 {{ abc }}
+>                </div>
+>            </li>
+>            <!-- item of items 的形式 -->
+>            <!-- <li v-for="abc of list">
+>                <div>
+>                    <span>94期男生的梦中情人:</span> {{ abc }}
+>                </div>
+>            </li> -->
+>            <!-- <li >貂蝉</li>
+>            <li>朱丽叶罗伯茨</li>
+>            <li>慧伦特休斯顿</li>
+>            <li>乔碧萝</li> -->
 >
+>        </ul>
+>        <h1>女生男神排行榜</h1>
+>        <!-- v-for -->
+>        <div>
+>            <!-- 循环生成谁在谁的标签上写 v-for -->
+>            <div v-for="(item, index) in  manList">
+>                <span style="font-size: 20px;color:red;font-weight: bold;">女生男神排行榜第{{ index + 1 }}位</span>
+>                <span style="color: blue; font-size: 40px; ">
+>                    {{ item.name }}
+>                </span>
+>                <!-- 这里用一个没学过的技术 v-bind -->
+>                <img style="width: 300px; height: 300px;" :src="item.img" alt="">
+>            </div>
+>        </div>
+>    </div>
+>    <script src="./vue.js"></script>
+>    <script>
+>        var vm = new Vue({
+>            el: '#app',
+>            data: {
+>                list: ["貂蝉", "朱丽叶罗伯茨", "慧伦特休斯顿", "乔碧萝"],
+>                manList: [
+>                    { name: '宋小宝', img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582177684030&di=915b9ca838d8e80be6ca0e35757531d0&imgtype=0&src=http%3A%2F%2Fnews.southcn.com%2Fc%2Fimages%2Fattachement%2Fjpg%2Fsite4%2F20140409%2F90fba609961614af46f743.jpg' },
+>                    { name: '肖战', img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582177647121&di=7bf965adecf68ce406dbee9c8cad17c4&imgtype=0&src=http%3A%2F%2Fimg.tukexw.com%2Fimg%2F891dc03ed32eb0aa.jpg' },
+>                    { name: '王一博', img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582177663957&di=dc51414b558674fe5689300643e416bd&imgtype=0&src=http%3A%2F%2Fpics5.baidu.com%2Ffeed%2F0d338744ebf81a4c87d74b921797445f272da6cc.jpeg%3Ftoken%3D5f7da7e2f3c7e5d1783ff778f5e59682%26s%3D6BADA1444A2A10150720F99B0300709F' }],
+>            },
+>            methods: {}
+>        });
+>
+>    </script>
 >```
 >
 >**`任务`**: 
