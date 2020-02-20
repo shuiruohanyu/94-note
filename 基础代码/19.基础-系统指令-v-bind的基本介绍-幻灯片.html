@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img {
+            width: 600px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 放置一个img标签 循环显示幻灯片 -->
+        <button @click="start">开始轮播</button>
+        <button @click="stop">结束轮播</button>
+        <img :src="list[currentIndex]" alt="">
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list:
+                    ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582190738419&di=d1ed97e1287f47dfda3ad8a14b921754&imgtype=0&src=http%3A%2F%2Fpic.nbdpx.com%2Fupload%2Fb%2Fef%2Fbefa1bac5875878471044ae0d2bcab33_thumb.jpg",
+                        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582190738419&di=808fb2b73cadd70ac5c597f507dfda4c&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn14%2F613%2Fw900h513%2F20180529%2F5e21-hcffhsu9748508.jpg",
+                        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582190962261&di=a6a010b9ec6b77c22d6aa39368ca456c&imgtype=0&src=http%3A%2F%2Fdingyue.nosdn.127.net%2FNzk3p2XiwDduvRyAFBkBnV451l7uGAvp8dAmIiNPnypzG1511314259157compressflag.jpg",
+                        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582190978893&di=a042dbd2327c159f2fdd888596939805&imgtype=0&src=http%3A%2F%2Fimg.08087.cc%2Fuploads%2F20190112%2F20%2F1547296047-gfaYGzKtOR.jpg",
+                        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582190993454&di=37df3478791ab5d90089f2083b677837&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fent%2Ftransform%2F617%2Fw630h787%2F20200109%2F2c84-imvsvza2597617.jpg"
+                    ],
+                currentIndex: -1  // 表示 当前播放的索引
+            },
+            methods: {
+                // 开始播放 间隔相等的时间内 更换 currentIndex => setTimeout  setInterval
+                start() {
+                    // this 指向vm实例
+                    //    定义一个 每隔一段时间就执行的函数
+                    let func = () => {
+                        // 不需要更换索引 5条件记录 索引下标最大值 长度-1  如果到达了最后一张 回到 0 
+                        if (this.currentIndex < this.list.length - 1) {
+                            //  只有小于最大长度的时候 才能++
+                            this.currentIndex++
+                        } else {
+                            this.currentIndex = 0  // 否则应该回到第一页
+                        }
+                    }
+                    this.flag = setInterval(func, 100) // 将定时器的flag赋值当前实例的一个属性
+                },
+                stop() {
+                    //  结束轮播的时候 需要清除定时器 
+                    clearInterval(this.flag)
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

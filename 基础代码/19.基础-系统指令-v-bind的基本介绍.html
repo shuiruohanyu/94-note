@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-bind的基本用法 v-bind:属性="表达式" -->
+        <div v-bind:id="id"></div>
+        <img :src="src" alt="">
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                id: 'gaoly',
+                src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582190693207&di=0ba36db72342b453362b48e789e2fcdb&imgtype=0&src=http%3A%2F%2Fvpic.video.qq.com%2F3388556%2Fy035512lhja_ori_3.jpg'
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

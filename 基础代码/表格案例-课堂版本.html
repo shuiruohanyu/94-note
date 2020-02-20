@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>老高的表格案例</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-8">
+        <div class="page-header">
+          <h1>表格案例 <small>Follow me!!!</small></h1>
+        </div>
+        <!-- 添加框 -->
+        <div class="form-inline">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="请输入你理想的公司" />
+          </div>
+          <button class="btn btn-success" type="submit">添加</button>
+        </div>
+        <!-- 搜索框 -->
+        <div class="form-inline" style="margin: 20px 0">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="搜索关键字" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <table class="table table-hover">
+          <thead>
+            <th>#</th>
+            <th>公司名称</th>
+            <th>时间</th>
+            <th>操作</th>
+          </thead>
+          <tbody>
+            <!-- 使用v-for将静态内容换成动态内容 -->
+            <!-- 循环生成谁 就在谁的标签上写 v-for -->
+            <tr v-for="(item,index) in list">
+              <td>{{ index + 1 }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.date }}</td>
+              <td>
+                <a href="#">删除</a>
+              </td>
+            </tr>
+            <!-- 这个tr是当没有数据的时候 才显示  根据条件决定该元素是否渲染-->
+            <!-- 第一种判断 -->
+            <!-- <tr v-if="list.length === 0">
+              <td colspan="4" style="color:#999">没有任何数据</td>
+            </tr> -->
+            <!-- 第二种判断 -->
+            <tr v-if="!list.length">
+              <td colspan="4" style="color:#999">没有任何数据</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- 引入vuejs -->
+  <script src="./vue.js"></script>
+  <script>
+    // 实例化
+    var vm = new Vue({
+      el: '.container-fluid', // Vue实例所管理的视图
+      data: {
+        // 响应式数据
+        list: [
+          { name: '阿里巴巴', date: new Date() },
+          { name: '字节跳动', date: new Date() },
+          { name: '腾讯', date: new Date() }] // 定义表格数据
+      }
+    })
+  </script>
+</body>
+
+</html>
