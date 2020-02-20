@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- v-on 注册 input的值改变事件 v-on:change  @change -->
+    <!-- input的change事件 是在失去焦点的时候 才会执行 -->
+    <!-- input事件 只要内容一变化 就会立刻执行 -->
+    <div id="app">
+        <input v-on:input="changeInput" type="text">
+        <button @click="btn">按钮</button>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: 'vuejs竟然干出如此的事'
+            },
+            methods: {
+                // 定义一个方法
+                changeInput(event) {
+                    // 如果获取值改变的文本框内容?
+                    // 如果直接写方法名 第一个参数就是event event.target=> 触发该事件的元素对象
+                    console.log(event.target.value)
+                },
+                btn() {
+                    // 输出 name的值 
+                    // this 指向vm实例
+                    console.log(this.name)
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- v-on注册事件  v-on:事件名.修饰符="方法名" 
+     .修饰符 可不写
+    -->
+    <!-- 
+        简写方式 @事件名="方法名"
+     -->
+    <!-- 如果直接写方法名  -->
+    <div id="app">
+        <!-- 直接写方法名的形式 -->
+        <button v-on:click="happy">今天是好日子,离解封不远了</button>
+        <button @click="happy">我更开心</button>
+        <!--如果是另外一种形式  方法调用的形式-->
+        <button @click="nice($event)"> 方法调用的形式</button>
+        <!-- 带修饰符的事件  once 表示该事件只会执行一次-->
+        <button @click.once="btn">带修饰符的事件</button>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '开心'
+            },
+            methods: {
+                happy(event) {
+                    // 如果不写括号 第一个参数就是事件对象
+                    console.log(event)
+                    // this指向 vm实例
+                    alert(this.msg)
+                },
+                nice(event) {
+                    // 如果写了括号 想要获取事件参数 需要在括号中 显示的传入 $event
+                    console.log(event)
+                    alert("very nice")
+                },
+                // 带修饰符的方法
+                btn() {
+                    alert("我是带修饰符的哦")
+                }
+            }
+        });
+        // document.getElementById("btn").onclick = function (e) {
+        //     // e是 事件参数
+        // }
+    </script>
+</body>
+
+</html>

@@ -381,67 +381,63 @@
 >**`目标:`**掌握vue绑定事件的方式
 >
 >* 场景:  使用v-on指令给元素绑定事件
->* 使用: 绑定 v-on:事件名.修饰符="方法名"   可使用 @事件名="方法名的方式"
->* **注意** 方法名 中 可以采用$event的方式传形参  也可以直接写事件名 默认第一个参数为event事件参数
+>* 使用: 绑定 **`v-on:事件名.修饰符="方法名"`**   可使用 **`@事件名="方法名"`**
+>* **`注意`** 方法 中 可以采用**`$event`**的方式传形参  也可以直接写方法名 默认第一个参数为event事件参数
 >* 如果只写方法名 不写括号 =>方法中默认传入的第一个参数就是事件参数 =>event
->* **`修饰符(可不写)`**
+>* **`修饰符(可不写)`**  修饰符是对于当前事件的修饰和描述
 >
 >- `.once` - 只触发一次回调。
-> - `.prevent` - 调用 `event.preventDefault()`。
+> - `.prevent` - 调用 `event.preventDefault()`。表示自动帮你执行了 **`event.preventDefault()`**
 >
 >```html
-><div id="app">
->  <!-- v-on:xx事件名='当触发xx事件时执行的语句' -->
->       <!-- 执行一段js语句:可以使用data中的属性 -->
->       <button v-on:click="count += 1">增加 1</button>
->       <!-- v-on的简写方法 -->
->       <button @click="count += 1">增加 1</button>
->       <!-- 执行一个方法 -->
->       <button @click="add">增加 1</button>
->       <!-- 执行一个方法、这种写法可以传形参 -->
->       <button @click="fn1(count)">执行fn1方法</button>
->       <!-- 执行一个方法、这种写法可以传形参,特殊的形参$event -->
->       <button @click="fn2($event)">执行fn2方法</button>
->       <hr>
->       <!-- v-on修饰符 如 once: 只执行一次 -->
->       <button @click.once="fn4">只执行一次</button>
->    
->  <p>上面的按钮被点击了 {{ count }} 次。</p>
->    </div>
->   <script src="./vue.js"></script>
->   <script>
->      new Vue({
->           el: '#app',
->           data: {
->               count: 0,
->               items: ['a', 'b', 'c']
->           },
->           methods: {
->               add: function() {
->                   this.count += 1;
->               },
->               fn1: function(count) {
->                   console.log(count);
->                   console.log('fn1方法被执行');
->               },
->               fn2: function(e) {
->                   console.log(e);
->                   console.log('fn2方法被执行');
->               },
->               fn3: function(index) {
->                   console.log(index);
->                   console.log('fn3方法被执行');
->               },
->               fn4: function() {
->                   console.log('fn4方法被执行了');
->               }
->           }
->       });
->    </script>
->
->```
->
->**`任务`**: 
+>  <!-- v-on注册事件  v-on:事件名.修饰符="方法名" 
+>      .修饰符 可不写
+>     -->
+>     <!-- 
+>         简写方式 @事件名="方法名"
+>      -->
+>     <!-- 如果直接写方法名  -->
+>     <div id="app">
+>         <!-- 直接写方法名的形式 -->
+>         <button v-on:click="happy">今天是好日子,离解封不远了</button>
+>         <button @click="happy">我更开心</button>
+>         <!--如果是另外一种形式  方法调用的形式-->
+>         <button @click="nice($event)"> 方法调用的形式</button>
+>         <!-- 带修饰符的事件  once 表示该事件只会执行一次-->
+>         <button @click.once="btn">带修饰符的事件</button>
+>     </div>
+>     <script src="./vue.js"></script>
+>     <script>
+>         var vm = new Vue({
+>             el: '#app',
+>             data: {
+>                 msg: '开心'
+>             },
+>             methods: {
+>                 happy(event) {
+>                     // 如果不写括号 第一个参数就是事件对象
+>                     console.log(event)
+>                     // this指向 vm实例
+>                     alert(this.msg)
+>                 },
+>                 nice(event) {
+>                     // 如果写了括号 想要获取事件参数 需要在括号中 显示的传入 $event
+>                     console.log(event)
+>                     alert("very nice")
+>                 },
+>                 // 带修饰符的方法
+>                 btn() {
+>                     alert("我是带修饰符的哦")
+>                 }
+>             }
+>         });
+>         // document.getElementById("btn").onclick = function (e) {
+>         //     // e是 事件参数
+>         // }
+>     </script>
+> ```
+> 
+> **`任务`**: 
 >
 >1. 初始化一个Vue实例, 定义data中name  为   **`Vuejs竟干出如此的事`**!
 >2. 添加一个 input  button 
