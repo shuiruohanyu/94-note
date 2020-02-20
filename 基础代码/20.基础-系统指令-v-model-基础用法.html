@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 插值表达式 -->
+        <p>{{ man  }}</p>
+        <!-- v-model  作用于表单元素  v-model="变量"  数据 => 视图  视图 =>数据  -->
+        <input type="text" v-model="man" />
+        <input type="text" v-model="man">
+
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                man: '黑马程序员'
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

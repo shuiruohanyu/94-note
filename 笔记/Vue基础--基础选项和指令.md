@@ -719,9 +719,13 @@
 
 ## 基础-系统指令-v-model-基础用法
 
+v-model是Vuejs双向数据流的体现
+
 > **`目标`: **掌握v-model的基础用法
 >
 > **`作用`:**  和表单元素进行绑定完成双向绑定
+>
+>   语法:  v-model="data中的变量", v-model作用于 表单元素
 >
 > - 数据发生变化可以更新到界面
 > - 通过界面可以更改数据
@@ -734,7 +738,9 @@
 > 3. 使用v-model实现 input和p标签的数据双向同步
 >
 
-## 基础-系统指令-v-model-语法糖原理
+## 基础-系统指令-v-model-`语法糖`原理
+
+语法糖实际上就是一种复杂语法的简写形式
 
 >**`目标`**:掌握 v-model的实现原理 
 >
@@ -745,31 +751,33 @@
 >
 >**分析**   
 >
->*  表单元素数据改变 => 数据发生改变
+>*  表单元素改变 => 数据发生改变
 >
->   * 数据改变 => 页面数据变化
+>  * 数据改变 => 页面变化
 >
 >```html
-><div id="app">
-><input type="text" @input="changeInput" :value="name" />
->{{ name }}
-></div>
-><script src="./vue.js"></script>
-><script>
->var vm = new Vue({
->el: "#app",
->data: {
->name: "张三"
->},
->methods: {
->changeInput(event) {
-> // 值发生改变时 会触发这个方法
-> //  去value值
-> this.name = event.target.value;
->}
->}
->});
-></script>
+>    <div id="app">
+>        <p>就业薪水:{{ money }}</p>
+>        <!-- 不用v-model 用v-bind 和 v-on组合 得到双向绑定效果 -->
+>        <!-- @change只能在 失去焦点的时候执行表 -->
+>        <input type="text" :value="money" @input='changeInput' />
+>        <!-- 监听数据的改变 -->
+>    </div>
+>    <script src="./vue.js"></script>
+>    <script>
+>        var vm = new Vue({
+>            el: '#app',
+>            data: {
+>                money: '12k'
+>            },
+>            methods: {
+>                changeInput(event) {
+>                    // this 永远指向vm实例  vuejs内部实现的
+>                    this.money = event.target.value // 拿到值之后 赋值给数据
+>                }
+>            }
+>        });
+>    </script>
 >```
 >
 >**`任务`**:   尝试使用v-bind 和 v--on 组合出 v-model的效果
