@@ -531,64 +531,61 @@
 
 >**`目标`**:掌握v-for循环对象的用法 
 >
+>
+>
 >```html
-><!DOCTYPE html>
-><html lang="en">
+> <div id="app">
+>        <!-- v-for 可以循环数组 也可以 循环对象 -->
+>        <!-- 语法 item in items(data对象) -->
+>        <!-- v-for  item 指的是value-->
+>        <!-- 
+>            value in items
+>            (value, key, index) in items
+>            值 / 键 / 索引
+>         -->
+>        <h1>男士的女伴的理想要求</h1>
 >
->   <head>
->       <meta charset="UTF-8">
->       <meta name="viewport" content="width=device-width, initial-scale=1.0">
->       <meta http-equiv="X-UA-Compatible" content="ie=edge">
->       <title>Document</title>
->   </head>
->
->   <body>
->       <div id="app">
->           <!-- v-for作用:列表渲染,当遇到相似的标签结构时,就用v-for去渲染
->               v-for="元素 in 容器(数组和对象)"
->               v-for="对象中的属性值 in data中的对象名"
->           -->
->           <!-- 对象 -->
->           <!-- (v,k,i)in 对象
->               v:值
->               k:键
->               i:对象中每对key-value的索引 从0开始
->               注意: v,k,i是参数名,见名知意即可!
->           -->
->           <p v-for="value in per">{{value}}</p>
->           <hr>
->           <p v-for="(value,key) in per">{{value}}----{{key}}</p>
->           <hr>
->           <p v-for="(value,key,i) in per">{{value}}----{{key}}--{{i}}</p>
->
->       </div>
->       <script src="./vue.js"></script>
->       <script>
->           new Vue({
->               el: '#app',
->               data: {
->                   per: {
->                       name: '老王',
->                       age: 38,
->                       gender: '男'
->                   }
->               },
->               methods: {
->
->               }
->           })
->       </script>
->   </body>
->
-></html>
->
+>        <ul>
+>            <li v-for="(value,key, index) in girlFriand">
+>                {{ key }}: {{ value }} : {{ index }}
+>            </li>
+>        </ul>
+>        <h1>女士的男伴的理想要求</h1>
+>        <div>
+>            <div v-for="(value, key) in boyFriand">
+>                {{ key }} : {{ value }}
+>            </div>
+>        </div>
+>    </div>
+>    <script src="./vue.js"></script>
+>    <script>
+>        var vm = new Vue({
+>            el: '#app',
+>            data: {
+>                // 女朋友对象
+>                girlFriand: {
+>                    name: '山口百惠',
+>                    height: '180cm',
+>                    weight: '180kg',
+>                    money: '20块'
+>                },
+>                boyFriand: {
+>                    name: '吴彦祖',
+>                    car: '坦克',
+>                    height: '185cm',
+>                    money: '$100万'
+>                }
+>            },
+>            methods: {}
+>        });
+>    </script>
 >```
 >
 >语法:
 >
 >```js
 >item in items  // item为当前遍历属性对象的值
->(item, key, index) in  items //item为当前遍历属性对象的值 key为当前属性名的值  index为当前索引的值
+>(value, key, index) in  items //value为当前遍历属性对象的值 key为当前属性名的值  index为当前索引的值
 >
 >```
 >

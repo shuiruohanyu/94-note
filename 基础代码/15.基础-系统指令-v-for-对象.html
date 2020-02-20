@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-for 可以循环数组 也可以 循环对象 -->
+        <!-- 语法 item in items(data对象) -->
+        <!-- v-for  item 指的是value-->
+        <!-- 
+            value in items
+            (value, key, index) in items
+            值 / 键 / 索引
+         -->
+        <h1>男士的女伴的理想要求</h1>
+
+        <ul>
+            <li v-for="(value,key, index) in girlFriand">
+                {{ key }}: {{ value }} : {{ index }}
+            </li>
+        </ul>
+        <h1>女士的男伴的理想要求</h1>
+        <div>
+            <div v-for="(value, key) in boyFriand">
+                {{ key }} : {{ value }}
+            </div>
+        </div>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                // 女朋友对象
+                girlFriand: {
+                    name: '山口百惠',
+                    height: '180cm',
+                    weight: '180kg',
+                    money: '20块'
+                },
+                boyFriand: {
+                    name: '吴彦祖',
+                    car: '坦克',
+                    height: '185cm',
+                    money: '$100万'
+                }
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
