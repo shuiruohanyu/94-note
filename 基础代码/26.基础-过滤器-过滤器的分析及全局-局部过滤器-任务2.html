@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 过滤器串联 -->
+        <p>{{ name | transUpper(3) | reverseStr }}</p>
+        <input type="text" v-model="name">
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: 'abc'
+            },
+            methods: {},
+            filters: {
+                // value => 过滤器的第一个参数  => 管道前面 表达式计算的值
+                transUpper: function (value, i) {
+                    // return value + '同学,How do you feel ?'
+                    return value.split("").map(function (item, index) {
+                        if (index === i) {
+                            // 如果找到了第n个 就把第n个转成大写
+                            return item.toUpperCase()
+                        }
+                        return item  // 别的字符不动
+                    }).join("")
+                },
+                // 字符串翻转的过滤器 必须要返回
+                reverseStr(value) {
+                    return value.split("").reverse().join("")
+                }
+            }
+        });
+    </script>
+</body>
+<!-- 
+    尝试实现一个过滤器, 根据传入的**`索引值`** 找到对应的字符串 转成大写 并显示
+    全局过滤器  /  局部过滤器
+    全局所有实例都可用
+    局部 => 只有当前实例自己可用
+ -->
+
+</html>

@@ -54,7 +54,8 @@
             <tr v-for="(item,index) in list">
               <td>{{ index + 1 }}</td>
               <td>{{ item.name }}</td>
-              <td>{{ item.date }}</td>
+              <!-- 通过过滤器对日期进行处理 -->
+              <td>{{ item.date | formatDate }}</td>
               <td>
                 <!-- 给删除注册事件 给事件加修饰符 event.preventDefault()-->
                 <a href="#" @click.prevent="delItem(index)">删除</a>
@@ -76,6 +77,8 @@
   </div>
   <!-- 引入vuejs -->
   <script src="./vue.js"></script>
+  <!-- 引入 moment -->
+  <script src="./moment.min.js"></script>
   <script>
     // 实例化
     var vm = new Vue({
@@ -110,6 +113,13 @@
             // 第三种
             this.list = this.list.filter((item, index) => index !== i)
           }
+        }
+      }
+      ,
+      filters: {
+        // 格式化日期的过滤器 value就是我们的日期
+        formatDate(value) {
+          return moment(value).format("YYYY-MM-DD HH:mm:ss")
         }
       }
     })

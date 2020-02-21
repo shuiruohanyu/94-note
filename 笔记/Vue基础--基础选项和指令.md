@@ -1063,26 +1063,53 @@ v-model是Vuejs双向数据流的体现
 
 ### 过滤器的串联和参数传递
 
->  过滤器可以传递参数,第一个参数永远是前面传递过来的过滤值, 从第二个参数开始就是传递的过滤器参数
+>  过滤器可以传递参数,第一个参数**`永远`**是前面传递过来的过滤值, 从第二个参数开始就是传递的过滤器参数
+>
+>  ```vue
+>  {{  msg | 过滤器名称(1,2,3) }}
+>  ```
 
 >  过滤器也可以多个串行起来并排使用  用法就是 用多个 **`管道`** 间隔
+>
+>  ```vue
+>  {{ msg | 过滤器1 | 过滤器2 }}
+>  ```
 
 **`任务`**  尝试实现一个过滤器, 根据传入的**`索引值`** 找到对应的字符串 转成大写 并显示
 
 ```js
-// index为传入的参数 
-toUpper(value, index) {
-         return value
-           .split("")
-           .map(function(item, i) {
-             if (i === index) {
-               return item.toUpperCase();
-             }
-             return item;
-           })
-           .join("");
-       }
-} // 根据传入的索引找到对应的字母换成大写字母
+  <div id="app">
+        <!-- 过滤器串联 -->
+        <p>{{ name | transUpper(3) | reverseStr }}</p>
+        <input type="text" v-model="name">
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: 'abc'
+            },
+            methods: {},
+            filters: {
+                // value => 过滤器的第一个参数  => 管道前面 表达式计算的值
+                transUpper: function (value, i) {
+                    // return value + '同学,How do you feel ?'
+                    return value.split("").map(function (item, index) {
+                        if (index === i) {
+                            // 如果找到了第n个 就把第n个转成大写
+                            return item.toUpperCase()
+                        }
+                        return item  // 别的字符不动
+                    }).join("")
+                },
+                // 字符串翻转的过滤器 必须要返回
+                reverseStr(value) {
+                    return value.split("").reverse().join("")
+                }
+            }
+        });
+    </script>
 ```
 
 ## 基础-表格案例-使用过滤器完成日期 格式处理
@@ -1100,20 +1127,25 @@ toUpper(value, index) {
 >​       4 .  使用过滤器
 >
 >```js
->formatDate(value, format) {
->  return moment(value).format(format);
->}  // 过滤器代码
+>      filters: {
+>        // 格式化日期的过滤器 value就是我们的日期
+>        formatDate(value) {
+>          return moment(value).format("YYYY-MM-DD HH:mm:ss")
+>        }
+>      }
 >```
 >
 >**`路径`**: 参照实现代码
 
 ## 基础-ref 操作 DOM
 
+vuejs是以数据为中心, 几乎不用操作dom, 但是有的情况还是需要
+
 >**`目标`**掌握如何通过ref来获取dom对象
 >
 >* 作用: 通过ref特性可以获取元素的dom对象
 >
->* 使用:  给元素定义 ref属性, 然后通过$refs.名称 来获取dom对象
+>* 使用:  给元素定义 ref属性, 然后通过**`$refs`**.**`名称`** 来获取dom对象
 >
 >```html
 ><input type="text" ref="myInput" /> // 定义ref
@@ -1122,7 +1154,7 @@ toUpper(value, index) {
 >
 >```js
 >focus() {
->      this.$refs.myInput.focus();
+>     this.$refs.myInput.focus();
 >}  // 获取dom对象 聚焦
 >```
 >
@@ -1134,6 +1166,38 @@ toUpper(value, index) {
 >4. 按钮事件中通过ref获取input的value内容
 >
 >**`路径`**: 参照实现代码
+>
+>**`注意`**:   项目1 项目2 期间 => ref => ref不仅仅可以作用在h5标签上,还可以作用在 **`组件`**上 =>组件对象
+>
+>```vue
+>    <div id="app">
+>        <!-- 写入一个input标签 -->
+>        <!-- 定义一个ref属性 -->
+>        <input type="text" ref="myInput" />
+>        <!-- <div></div>
+>        <p></p>
+>        <span></span>
+>        <img src="" alt=""> -->
+>        <button @click="getValue">按钮</button>
+>    </div>
+>    <script src="./vue.js"></script>
+>    <script>
+>        var vm = new Vue({
+>            el: '#app',
+>            data: {
+>                name: ''
+>            },
+>            methods: {
+>                getValue() {
+>                    //  获取 input的value内容
+>                    alert(this.$refs.myInput.value)
+>                }
+>            }
+>        });
+>    </script>
+>```
+>
+>
 
 ## 基础-自定义指令-全局/局部自定义指令
 
