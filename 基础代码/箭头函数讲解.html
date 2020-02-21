@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 箭头函数实际上就是一个语法糖
+        // v-model 是 v-bind 和 v-on  简写形式 => 双向绑定
+        // 构造函数
+        function Vue(option) {
+            this.name = option.data.name
+            this.list = option.data.list  // 用当前实例的list属性 接收构造函数传入的list参数
+            //   第一种方案
+            // var _this = this  // _this表示 当前的vue实例
+            // this.list.forEach(function (item, index) {
+            //     // this指向 调用该函数的上下文
+            //     console.log(_this.name);
+            // });
+            // 第二种方案
+            this.list.forEach(element => {
+                // 如果用了箭头函数 this指向了父级作用的上下文 (this)
+                console.log(this.name)
+            });
+        }
+        var vm = new Vue({
+            data: {
+                name: '张三',
+                list: ["吴彦祖", "宋小宝", "李逵"]
+            }
+        })  // 实例化
+        // console.log(vm.list)
+    </script>
+</body>
+
+</html>
