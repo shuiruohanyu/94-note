@@ -33,7 +33,8 @@
         <!-- 搜索框 -->
         <div class="form-inline" style="margin: 20px 0">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="搜索关键字" />
+            <!-- 双向绑定  数据即视图 视图即数据 -->
+            <input v-model="searchVal" type="text" class="form-control" placeholder="搜索关键字" />
           </div>
         </div>
       </div>
@@ -51,7 +52,7 @@
           <tbody>
             <!-- 使用v-for将静态内容换成动态内容 -->
             <!-- 循环生成谁 就在谁的标签上写 v-for -->
-            <tr v-for="(item,index) in list">
+            <tr v-for="(item,index) in filterList">
               <td>{{ index + 1 }}</td>
               <td>{{ item.name }}</td>
               <!-- 通过过滤器对日期进行处理 -->
@@ -85,6 +86,7 @@
       el: '.container-fluid', // Vue实例所管理的视图
       data: {
         // 响应式数据
+        searchVal: '', // 作为绑定搜索框的值
         name: '', // 作为双向绑定的数据
         list: [
           { name: '阿里巴巴', date: new Date() },
@@ -128,6 +130,21 @@
           inserted(dom) {
             dom.focus() // 自动聚焦
           }
+        }
+      },
+      // 定义计算属性
+      computed: {
+        // 通过 输入的搜索内容 和列表内容 筛选出我们要的结果
+        // 计算属性必须要有返回值
+        filterList() {
+          // this指向 vm实例
+          //   this.list // 数组
+          // 关键字
+          // 搜索功能 在一个数组中 搜索和关键字相关的数据
+          return this.list.filter((item) => {
+            // 筛选条件 返回一个条件表达式
+            return item.name.includes(this.searchVal)
+          })
         }
       }
     })

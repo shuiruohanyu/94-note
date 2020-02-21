@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 插值表达式 运算 方法 -->
+        <p>{{ name.split("").reverse().join("") }}</p>
+        <!-- 方法  封装了逻辑 -->
+        <p>{{ reverse() }}</p>
+        <p>{{ reverse() }}</p>
+        <p>{{ reverse() }}</p>
+        <p>{{ reverse() }}</p>
+        <p>{{ reverse() }}</p>
+        <p>{{ reverse() }}</p>
+        <!-- 计算属性 -->
+        <p>{{ reverseStr }}</p>
+        <!-- 定二次 -->
+        <p>{{ reverseStr }}</p>
+        <p>{{ reverseStr }}</p>
+        <p>{{ reverseStr }}</p>
+        <p>{{ reverseStr }}</p>
+        <input type="text" v-model="name">
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '我爱北京天安门'
+            },
+            methods: {
+                reverse() {
+                    console.log("执行方法")
+                    return this.name.split("").reverse().join("")
+                }
+            },
+            // 所有的计算属性都写在computed中
+            computed: {
+                // 效率是更高的 
+                // 计算属性不能和方法重名 不能和data数据重名
+                reverseStr() {
+                    console.log("执行计算属性")
+                    // this 指向vm实例 计算属性必须有返回值
+                    return this.name.split("").reverse().join("")
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
