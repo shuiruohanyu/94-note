@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h2>Vue实例1</h2>
+        <h3>全局过滤器 changeName</h3>
+        <p>{{ name | changeName}}</p>
+        <h3>局部过滤器 changeName2</h3>
+        <p>{{ name | changeName2}}</p>
+        <p>{{ name }}</p>
+        <input type="text" v-model="name">
+    </div>
+    <div id="app1">
+        <h2>Vue实例2</h2>
+        <p>{{ name | changeName}}</p>
+        <!-- <p>{{ name | changeName2 }}</p> -->
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        // 全局过滤器 可以被所有的vue实例或者组件实例使用
+        // 局部过滤器 注册在实例上的 只能在注册的实例上使用
+        // 注意: 全局过滤器应该在Vue实例化之前注册
+        // 语法: Vue.filter(名称, 函数)
+        Vue.filter("changeName", function (value) {
+            // 过滤器函数 => 王际霖 => 王建霖
+            // map 和filter一样都是得到新数组
+            return value.split('').map(function (item, index) {
+                if (index === 1) {
+                    return "建"
+                }
+                return item
+            }).join("")
+        })
+        // 局部过滤器是注册在实例上
+        // filters(实例选项) : {  过滤器名称 :  **`过滤器函数`**  }
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '王际霖'
+            },
+            methods: {},
+            filters: {
+                // 对象 value代表 管道前面的表达式传递的值
+                changeName2: function (value) {
+                    return value.split('').map(function (item, index) {
+                        if (index === 2) {
+                            return "战"
+                        }
+                        return item
+                    }).join("")
+                }
+            }
+        });
+        var vm1 = new Vue({
+            el: "#app1",
+            data: {
+                name: '孙悟空'
+            }
+        })
+    </script>
+</body>
+
+</html>

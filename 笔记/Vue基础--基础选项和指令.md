@@ -943,41 +943,82 @@ v-model是Vuejs双向数据流的体现
 >
 >**`路径`**:  删除商品 
 >
->    1. 注册删除点击事件
+>   1. 注册删除点击事件
 >
 >​    2.通过方法传递当前删除的索引
 >
->​    3. 实现删除逻辑
+>    3. 实现删除逻辑
+>
+>```js
+>        // 删除元素的方法
+>        delItem(i) {
+>          // 需要知道删除谁 
+>          // 根据 索引 从数组中移除数据
+>          if (confirm("您是否要删除此条数据?")) {
+>            // 如果确定要删除了
+>            // this.list.splice(i, 1) // 移除数据 第一种
+>            // filter是返回一个新数组 
+>            // filter方法 filter(function() {  return 条件表达式(true => 选项就会返回插入新数组) false => 就不返回 })
+>            // 第二种
+>            // this.list = this.list.filter(function (item, index) { return index !== i }) // 找出删除数据之外的所有的数据 
+>            // 第三种
+>            this.list = this.list.filter((item, index) => index !== i)
+>          }
+>        }
+>```
+>
+>
 
 ## 基础-过滤器-过滤器的分析及全局-局部过滤器
 
 >**`目标`**: 了解过滤器的功能 作用以及作用场景
 >
->* 场景: data中的数据格式(日期格式/货币格式/大小写等)需要数据时
->* 使用位置:{{}}和v-bind="表达式"
->* 具体用法:{{msg | 过滤器名字}}
+>* 场景: data中的数据格式(日期格式/货币格式/大小写等)需要数据时 将原始数据  =>  过滤器 => 显示数据 (**`并不会改变原始数据`**)
+>* 使用位置:{{ }}和v-bind="表达式"
+>* 具体用法:{{ msg | 过滤器名字 }}  | 我们称之为**`管道`**
 >* 分类:  过滤器分为**`局部`**和**`全局`**
 >
 >全局过滤器:  一旦注册, 在**`所有`**的Vue实例或者组件实例都可以使用
 >
 >局部过滤器: **`只能`**在注册的Vue或者组件实例上使用
 >
+>注意**`: 全局过滤器应该在Vue实例化之前注册`**
+>
 >全局注册的方式 :  Vue.filter(过滤器名称,  **`过滤器函数`**)  
 >
+>**`过滤器必须有返回值`**
+>
 >```js
->Vue.filter("toUpper", function(value) {
-> return value.charAt(0).toUpperCase() + value.substr(1);
->});// 过滤器核心代码
+>        // 全局过滤器 可以被所有的vue实例或者组件实例使用
+>        // 局部过滤器 注册在实例上的 只能在注册的实例上使用
+>        // 注意: 全局过滤器应该在Vue实例化之前注册
+>        // 语法: Vue.filter(名称, 函数)
+>        Vue.filter("changeName", function (value) {
+>            // 过滤器函数 => 王际霖 => 王建霖
+>            // map 和filter一样都是得到新数组
+>            return value.split('').map(function (item, index) {
+>                if (index === 1) {
+>                    return "建"
+>                }
+>                return item
+>            }).join("")
+>        })
 >```
 >
 >局部注册的方式     filters(实例选项) : {  过滤器名称 :  **`过滤器函数`**  }
 >
 >```js
->filters: {
->    toUpper(value) {
->      return value.charAt(0).toUpperCase() + value.substr(1);
->    }
->  }
+>            filters: {
+>                // 对象 value代表 管道前面的表达式传递的值
+>                changeName2: function (value) {
+>                    return value.split('').map(function (item, index) {
+>                        if (index === 2) {
+>                            return "战"
+>                        }
+>                        return item
+>                    }).join("")
+>                }
+>            }
 >```
 >
 >过滤器函数的第一个参数 是 **`管道`**前面的计算结果值
@@ -991,6 +1032,34 @@ v-model是Vuejs双向数据流的体现
 ```
 
 **`任务`**  尝试做一个将abc转成Abc的过滤器吧 (全局/局部)
+
+```vue
+    <div id="app">
+        <p>{{ str |  transUpper}}</p>
+        <input type="text" v-model="str">
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        // 做一个 abc 转成 Abc的例子
+        // Vue.filter("transUpper", function (value) {
+        //     return value.charAt(0).toUpperCase() + value.substr(1)
+        // })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                str: 'abc'
+            },
+            methods: {},
+            filters: {
+                transUpper: function (value) {
+                    return value.charAt(0).toUpperCase() + value.substr(1)
+                }
+            }
+        });
+    </script>
+```
+
+
 
 ### 过滤器的串联和参数传递
 
