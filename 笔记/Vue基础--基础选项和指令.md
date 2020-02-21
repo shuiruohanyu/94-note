@@ -1199,9 +1199,15 @@ vuejs是以数据为中心, 几乎不用操作dom, 但是有的情况还是需�
 >
 >
 
-## 基础-自定义指令-全局/局部自定义指令
+## 基础-自定义指令-全局.局部自定义指令
+
+全局 => 所有vue实例都可用
+
+局部 => 只有当前实例可用
 
 > **`目标`**掌握如何全局/局部自定义一个指令
+>
+> v-text/v-html v-if/v-else /v-show/ v-on/v-bind/v-model/v-cloak/v-once/v-pre/v-for  系统指令
 >
 > 除了可以使用vue给的系统指令,我们也可以自定义指令
 >
@@ -1216,7 +1222,7 @@ vuejs是以数据为中心, 几乎不用操作dom, 但是有的情况还是需�
 >
 > })
 >
-> * **`局部自定义指令`** : 
+> * **`局部自定义指令`** :  注册在 实例的选项上
 >
 >   directives: {
 >
@@ -1250,6 +1256,32 @@ Vue.directive("focus", {
 ```
 
 >**`任务`** 实现一个可以自动聚焦input的自定义指令(全局/局部)v-focus
+>
+>```vue
+>    <div id="app">
+>        <input v-focus type="text">
+>    </div>
+>    <script src="./vue.js"></script>
+>    <script>
+>        var vm = new Vue({
+>            el: '#app',
+>            data: {},
+>            methods: {},
+>            directives: {
+>                "focus": {
+>                    // inserted 当指令作用的 元素被创建的时候执行
+>                    inserted(dom) {
+>                        // dom就是一个表单的对象
+>                        dom.focus() // 调用聚焦的方法
+>                    },
+>                }
+>            }
+>        });
+>    </script>
+>    <!-- 实现一个自动聚焦的指令  只能作用在表单上 -->
+>```
+>
+>
 
 ## 基础-表格案例-使用自定义指令完成自动获取焦点功能
 

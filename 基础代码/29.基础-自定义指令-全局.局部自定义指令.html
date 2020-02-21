@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p v-wjl="name"></p>
+        <input type="text" v-model="name">
+        <!-- img标签 -->
+        <img v-glr="123" src="" alt="">
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        // 全局自定义指令 在vue实例化之前 进行
+        // 语法  Vue.directive(指令名称,{ inserted, update })  指令名称 不需要加v-前缀 用指令的时候 需要加 v-
+        Vue.directive("wjl", {
+            // 表示 v-wjl 指令作用的元素 插入dom之后,就会执行inserted函数
+            // 只执行一次
+            inserted(dom, option) {
+                // dom表示  v-wjl 指令作用的元素对象
+                // option表示 指令后面对应的表达式内容
+                dom.innerText = option.value + '&&王际霖'
+            },
+            // 数据变化的时候会执行update
+            update(dom, option) {
+                dom.innerText = option.value + '&&王际霖'
+            }
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '李逵'
+            },
+            methods: {},
+            directives: {
+                // 局部自定义指令  作用在 img标签上 默认给 img一个地址
+                'glr': {
+                    inserted(dom, option) {
+                        // dom 就是作用的对象 img
+                        dom.src = 'http://t7.baidu.com/it/u=3616242789,1098670747&fm=79&app=86&f=JPEG?w=900&h=1350'
+                        dom.style.width = "200px"
+                        dom.style.height = "200px"
+                        dom.style.borderRadius = "50%"
+                        // 这里你可以做你想做的任何事
+                    },
+                    update(dom, option) {
+
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

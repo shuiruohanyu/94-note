@@ -24,7 +24,7 @@
           <div class="form-group">
             <!-- v-model可以双向同步 数据就是视图 视图就是数据 -->
             <!-- trim 的目的是去掉空格 -->
-            <input v-model.trim="name" type="text" class="form-control" placeholder="请输入你理想的公司" />
+            <input v-focus v-model.trim="name" type="text" class="form-control" placeholder="请输入你理想的公司" />
           </div>
           <!-- 注册点击事件 -->
           <!-- disabled 变化的属性  动态绑定属性 disabled  true就是不可编辑 false就是可编辑 -->
@@ -120,6 +120,14 @@
         // 格式化日期的过滤器 value就是我们的日期
         formatDate(value) {
           return moment(value).format("YYYY-MM-DD HH:mm:ss")
+        }
+      },
+      // 自定义指令
+      directives: {
+        focus: {
+          inserted(dom) {
+            dom.focus() // 自动聚焦
+          }
         }
       }
     })
