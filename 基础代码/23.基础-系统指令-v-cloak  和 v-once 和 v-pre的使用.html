@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div style="font-size:30px; color: red">{{  name }}</div>
+        <!-- vue实例化之前  插值表达式还没有 渲染-->
+        <!-- v-cloak指令 可以 在渲染完成之后 自动将 v-cloak指令移除 -->
+        <div>{{ msg }}</div>
+        <div>{{ tip }}</div>
+        <!-- 一个东西但凡需要重复 就要考虑有没有好的方案 -->
+        <!-- v-once -->
+        <p>{{ money }}</p>
+        <!-- 写个v-once意味着该视图将不会再更新 -->
+        <p v-once>{{ money }}</p>
+        <input type="text" v-model="money">
+
+        <!-- v-pre 如果你就想显示 {{ name }}  跳过对于该元素的编译-->
+        <div v-pre>{{ name }} {{a }}</div>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '前线医生,值得尊敬',
+                msg: '同学们挺住,咱们快解封了',
+                tip: '成年人需要为自己的言行负责哦',
+                money: '5000'
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

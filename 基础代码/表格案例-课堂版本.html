@@ -22,9 +22,13 @@
         <!-- 添加框 -->
         <div class="form-inline">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="请输入你理想的公司" />
+            <!-- v-model可以双向同步 数据就是视图 视图就是数据 -->
+            <!-- trim 的目的是去掉空格 -->
+            <input v-model.trim="name" type="text" class="form-control" placeholder="请输入你理想的公司" />
           </div>
-          <button class="btn btn-success" type="submit">添加</button>
+          <!-- 注册点击事件 -->
+          <!-- disabled 变化的属性  动态绑定属性 disabled  true就是不可编辑 false就是可编辑 -->
+          <button :disabled="!name" @click="addItem" class="btn btn-success" type="submit">添加</button>
         </div>
         <!-- 搜索框 -->
         <div class="form-inline" style="margin: 20px 0">
@@ -77,10 +81,20 @@
       el: '.container-fluid', // Vue实例所管理的视图
       data: {
         // 响应式数据
+        name: '', // 作为双向绑定的数据
         list: [
           { name: '阿里巴巴', date: new Date() },
           { name: '字节跳动', date: new Date() },
           { name: '腾讯', date: new Date() }] // 定义表格数据
+      },
+      methods: {
+        // 添加数据
+        addItem() {
+          this.list.unshift({ name: this.name, date: new Date() })
+          // unshift => 数组的方法 
+          // 清空输入框
+          this.name = ""
+        }
       }
     })
   </script>
