@@ -52,7 +52,7 @@
           <tbody>
             <!-- 使用v-for将静态内容换成动态内容 -->
             <!-- 循环生成谁 就在谁的标签上写 v-for -->
-            <tr v-for="(item,index) in filterList">
+            <tr v-for="(item,index) in list">
               <td>{{ index + 1 }}</td>
               <td>{{ item.name }}</td>
               <!-- 通过过滤器对日期进行处理 -->
@@ -105,10 +105,21 @@
 
         // 添加数据
         addItem() {
-          this.list.unshift({ name: this.name, date: new Date() })
+          // 调用接口
+          axios.post("http://localhost:3000/company",
+            {
+              name: this.name,
+              date: new Date()
+            }).then(() => {
+              // 添加成功会进入then
+              // 如果指向then意味着删除成功
+              this.getList()
+              // 清空输入框
+              this.name = ""
+            })
+          // this.list.unshift({ name: this.name, date: new Date() })
           // unshift => 数组的方法 
-          // 清空输入框
-          this.name = ""
+
         },
         // 删除元素的方法
         delItem(id) {
@@ -147,6 +158,10 @@
           //   this.list // 数组
           // 关键字
           // 搜索功能 在一个数组中 搜索和关键字相关的数据
+          // 耗时任务 setTimeout setInterval  ajax 
+          // axios.get().then(function () { 
+          //   // 获取结果
+          // })
           return this.list.filter((item) => {
             // 筛选条件 返回一个条件表达式
             return item.name.includes(this.searchVal)
@@ -158,6 +173,18 @@
         //   该函数会在Vue实例创建完毕之后执行
         // this 同样 指向vm实例
         this.getList() // 获取list数据
+      },
+      watch: {
+        // 搜索框一变化 就会发出请求
+        searchVal: function (newValue) {
+          // this指向vm实例的
+          // 调用搜索接口
+          // http://localhost:3000/company?name_like=%E8%88%9F
+          axios.get(`http://localhost:3000/company?name_like=${newValue}`).
+            then((result) => {
+              this.list = result.data  // 搜索出来的数据
+            })
+        }
       }
     })
   </script>

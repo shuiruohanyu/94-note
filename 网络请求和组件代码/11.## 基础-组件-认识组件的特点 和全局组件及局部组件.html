@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        456
+        <!-- <span>{{count1}}</span> <button @click="changeCount1">按钮</button> <br>
+        <span>{{count2}}</span> <button @click="changeCount2">按钮</button> <br>
+        <span>{{count3}}</span> <button @click="changeCount3">按钮</button> <br>
+        <span>{{count4}}</span> <button @click="changeCount4">按钮</button> <br>
+        <span>{{count5}}</span> <button @click="changeCount5">按钮</button> <br>
+        <span>{{count6}}</span> <button @click="changeCount6">按钮</button> <br> -->
+        <!-- <span-btn></span-btn> -->
+        <!-- 一个span-btn 标签就是一个实例化的组件 -->
+        <!-- <span-btn></span-btn>
+        <span-btn></span-btn>
+        <span-btn></span-btn>
+        <span-btn></span-btn>
+        <span-btn></span-btn> -->
+
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        // 全局组件代码
+        Vue.component("span-btn", {
+            template: `<div>
+              <span>{{count}}</span> <button @click="changeCount">按钮</button> <br>
+    </div>`,
+            data() {
+                return {
+                    count: 0
+                }
+            },
+            methods: {
+                changeCount() {
+                    this.count++;
+                }
+            }
+        })
+        new Vue({
+            el: "#app",
+            template: `<div>
+            <div>
+              <span-btn />
+             </div>
+             <span>789</span>
+             </div>`
+        })
+        // new Vue({
+        //     el: '#app',
+        //     data: {
+        //         count1: 0,
+        //         count2: 0,
+        //         count3: 0,
+        //         count4: 0,
+        //         count5: 0,
+        //         count6: 0,
+        //     },
+        //     methods: {
+        //         changeCount1() {
+        //             this.count1++;
+        //         },
+        //         changeCount2() {
+        //             this.count2++;
+        //         },
+        //         changeCount3() {
+        //             this.count3++;
+        //         },
+        //         changeCount4() {
+        //             this.count4++;
+        //         },
+        //         changeCount5() {
+        //             this.count5++;
+        //         },
+        //         changeCount6() {
+        //             this.count6++;
+        //         }
+        //     }
+        // });
+    </script>
+</body>
+
+</html>

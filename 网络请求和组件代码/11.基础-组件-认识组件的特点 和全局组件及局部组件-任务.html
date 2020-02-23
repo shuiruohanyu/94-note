@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .produce-item {
+            position: relative;
+        }
+
+        .produce-item img {
+            width: 277px;
+            height: 277px;
+            border-radius: 4px;
+            margin: 20px;
+        }
+
+        .info {
+
+            position: absolute;
+            right: 40px;
+            bottom: 0;
+        }
+
+        .info span {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 35px;
+            font-size: 30px;
+            text-align: center;
+            user-select: none;
+
+        }
+
+        .addcut {
+            border-radius: 50%;
+            background-color: rgb(99, 99, 224);
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 使用组件直接写组件标签即可 -->
+        <produce-elec v-for="item in  100" :key="item"></produce-elec>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        // 全局组件还是局部组件
+        // 语法 Vue.component(组件名,组件对象)
+        // abc  或者 abc-d
+        var com = {
+            // 组件对象
+            template: `
+               <div class='produce-item'>
+                  <img src='https://img.alicdn.com/bao/uploaded/i3/TB1NP00eRr0gK0jSZFnE.vRRXXa_113406.jpg' />
+                  <div class='info'>
+                     <span v-if="count" @click="cut" class='addcut'>-</span> 
+                     <span v-if="count">{{ count }}</span>
+                     <span @click="add" class='addcut'>+</span>
+                  </div>
+               </div>
+            `,  // 用来展现页面结构 有且只有一个根节点
+            data() {
+                return {
+                    count: 0  // 响应式数
+                }
+            },
+            methods: {
+                cut() {
+                    this.count--
+                },
+                add() {
+                    this.count++
+                }
+            }
+        }
+        //  Vue.component("produce-elec", com) // 全局注册
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                add() { }
+            },
+            components: {
+                "produce-elec": com
+            }
+        });
+    </script>
+</body>
+
+</html>
