@@ -27,8 +27,6 @@ spa模式, **`第一次`**加载 会将所有的资源都请求到页面 **`模�
 * SPA要能记忆当前切换的模块,并且刷新页面模块依然还在当前视图
 * SPA要实现在前端切换模块时,不能引起页面刷新,否则页面内容会被重置
 
-
-
  **`结论`**
 
  * 可以通过页面地址的锚链接来实现spa
@@ -174,13 +172,9 @@ var Users = {
 
 **`任务`**
 
- 定义一个路由, 导航为 bkList 和 bkInfo
+ 定义一个路由, 导航为 **`bkList`**(百科列表)和 **`bkInfo`**(百度详情)
 
-百科列表 / 百度详情
-
-点击百科列表中 明星 , 跳到 详情, 并且把男星的名字和id传递过去,并显示 
-
-
+点击百科列表中 **`明星`** 跳到 **`明星详情`**, 并且把男星的名字和id传递过去
 
 ## 基础-路由-to多种方式 和 路由重定向
 
@@ -188,18 +182,23 @@ var Users = {
 
 * to属性 有多种赋值方式  
 
+> 可以直接是一个地址
+
 ```html
-<!-- 常规跳转 -->
-      <!-- <router-link to="/sport">体育</router-link> -->
-      <!-- 变量 -->
-      <!-- <router-link :to="path">体育</router-link> -->
-      <!-- 根据对象name跳转 -->
-      <!-- <router-link :to="{name:'abcdefg'}">体育</router-link> -->
-      <!-- 根据对象path跳转 -->
-      <!-- <router-link :to="{path:'/sport'}">体育</router-link> -->
-      <!-- 带参数的跳转 -->
-      <router-link :to="{name:'abcdefg',params:{a:1}}">体育</router-link>
+<router-link to="/sport">体育</router-link>
 ```
+
+> 可以是一个对象,对象中可以是 path 地址 或者name
+
+```html
+<router-link :to="{path:'/sport'}">体育</router-link>
+```
+
+```html
+<router-link :to="{name:'abc'}">体育</router-link>
+```
+
+> 当选中某个导航之后, 可以通过激活class分别出 谁是的当前的**`激活导航`**
 
 * 当我们选中了某个导航,可以通过激活class分别出 
 
@@ -220,8 +219,6 @@ var Users = {
    }
 },
 ```
-
-**`任务`** : 尝试 多种跳转的方式验证上面的方式
 
 ## 基础-路由-vue-router-编程式导航
 
