@@ -12,13 +12,12 @@
             margin: 30px auto;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
         }
 
         .list-item {
             border-radius: 4px;
             border: 1px solid #ccc;
-            margin: 20px 0;
+            margin: 20px;
 
         }
 
@@ -70,6 +69,30 @@
             font-size: 20px;
             font-weight: bold;
         }
+
+        .store {
+            background-image: url("http://pic.90sjimg.com/design/00/57/93/24/58facdf0a69a0.png");
+            background-size: cover;
+            position: absolute;
+            left: 100px;
+            bottom: 10px;
+            width: 80px;
+            height: 80px;
+        }
+
+        .store span {
+            /* margin-top: 10px; */
+            margin-left: 40px;
+            display: inline-block;
+            color: rgb(175, 41, 41);
+            border: 1px solid rgb(175, 41, 41);
+            min-width: 26px;
+            height: 26px;
+            text-align: center;
+            line-height: 26px;
+            border-radius: 50%;
+            background-color: #fff;
+        }
     </style>
 </head>
 
@@ -79,10 +102,11 @@
             <list-item @changecount="changecount" :item="item" v-for="(item,index) in list" :key="index">
             </list-item>
         </div>
+        <store :allnum="allnum"></store>
     </div>
     <script src="./vue.js"></script>
     <script>
-        Vue.component('ListItem', {
+        Vue.component('list-item', {
             template:
                 `<div class='list-item'>
                      <div class='img'>
@@ -90,7 +114,7 @@
                       </div>
                      <div class='info'>
                         <span class='title'>{{ item.title }}</span>
-                        <AddCut @changecount="changecount" :count="item.count" />
+                        <add-count @changecount="changecount" :count="item.count" />
                       </div>
                  </div>`,
 
@@ -101,7 +125,7 @@
                 }
             },
             components: {
-                "AddCut": {
+                "add-count": {
                     template: `<div class='addcut'>
                       <span @click="cutCount" class='addcut-span' v-if="count">-</span>
                       <span class='count' v-if="count">{{ count }}</span>
@@ -118,6 +142,13 @@
                     }
                 }
             }
+        })
+
+        Vue.component('store', {
+            template: `<div class='store'>
+               <span>{{allnum}}</span>
+            </div>`,
+            props: ["allnum"]
         })
         var vm = new Vue({
             el: '#app',
@@ -149,12 +180,21 @@
             },
             methods: {
                 changecount(item) {
-                    this.list = this.list.map(food => {
-                        if (item.id === food.id) {
-                            return item
-                        }
-                        return food
-                    })
+                    // this.list = this.list.map(food => {
+                    //     if (item.id === food.id) {
+                    //         return item
+                    //     }
+                    //     return food
+                    // })
+                    let index = this.list.findIndex(food => food.id === item.id)
+                    this.list.splice(index, 1, item)
+                }
+            },
+            computed: {
+                allnum() {
+                    return this.list.reduce(function (last, now) {
+                        return last + now.count
+                    }, 0)
                 }
             }
         });
