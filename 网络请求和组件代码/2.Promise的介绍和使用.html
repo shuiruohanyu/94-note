@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        //   实例化一个Promise  模拟一个异步操作
+        new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve(100) //成功执行 并且返回成功的执行结果 100
+            }, 2000)
+        }).then(function (data) {
+            //    拿到上一次执行结果了 我需要发出第二次请求
+            return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    // resolve(100 + data) // 将本次的结果 加上次的结果
+                    reject("第二次计算出bug了")
+                }, 2000)
+            })
+        }).then(function (data) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    resolve(100 + data) // 将本次的结果 加上次的结果
+                }, 2000)
+            })
+        }).then(function (data) {
+            alert(data)
+        }).catch(function (error) {
+            // 捕获错误
+            console.log(error)
+        })
+
+
+        new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve(1000)
+            }, 1000)
+        }).then(function (data) {
+            return Promise.reject("我错了大哥")
+            // return data + 1000  // 如果确定是同步操作 可以直接返回
+        }).then(function (data) {
+            console.log(data)
+        }).catch(function (error) {
+            console.log(error)
+        })
+    </script>
+</body>
+
+</html>

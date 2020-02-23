@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var str = "abcdef"
+        var a = str.split(""); // 切割数组
+        var rs = []; // 实例化数组
+        while (a.length) {
+            // 只要 数组有长度 就会进入
+            rs.push(a.pop());
+            // rs.push   f e d c b a
+        }
+        alert(rs.join(""));
+        // a.split("").reverse()
+    </script>
+</body>
+
+</html>

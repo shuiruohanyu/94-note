@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{ list | reverse }}
+        <button @click="reveser"></button>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        Vue.filter("reverse", function (value) {
+            // 如果直接对原数组进行操作 会造成 数据变化  => 视图变化  => 数据变化  => 死循环..
+            // 不能对原数组进行操作
+            // 直接对新数组进行操作
+            return [...value].reverse()
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [1, 2, 3]
+            },
+            methods: {
+                reveser() {
+                    this.list.reverse()
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

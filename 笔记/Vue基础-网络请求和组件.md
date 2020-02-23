@@ -23,8 +23,8 @@
 $.ajax({
     url,
     data,
-    success: function(){},
-    error: function(){}
+    success: function(data){},
+    error: function(error){}
 })
 ```
 
@@ -58,7 +58,7 @@ $.ajax({
 
 所以,ES6推出了 Promise才解决我们回调函数的这类问题
 
-**`Promise`** 对象用于表示一个异步操作的最终完成 (或失败), 及其结果值.
+**`Promise`** 对象用于表示一个**`异步操作`**的最终**`完成 (或失败)`**, 及其**`结果值`**.
 
 > 怎么玩呢? 首先对于一个异步操作,我们认为它就是一个promise,所以一旦有一个异步操作,就可以用直接实例化一个promise
 
@@ -66,10 +66,14 @@ $.ajax({
 new Promise(function(resolve, reject){})
 ```
 
+实例化Promise之后, Promise中的函数会**`立刻执行`**
+
 reslove 和 reject是两个方法
 
-* relove 是 **`成功`**执行该异步操作的函数,方法里可以携带成功执行时的参数
+* resolve是 **`成功`**执行该异步操作的函数,方法里可以携带**`成功执行时的参数`**
 * reject是 **`失败`**执行该异步操作的函数, 方法里携带 错误信息
+
+如果一个Promise想要结束,你必须执行**`resolve`**或者**`reject`**
 
 > 我们来用settimeout模拟一个异步操作 
 
@@ -169,6 +173,8 @@ new Promise(function(resolve, reject){
 
 > 这个时候我们的reject函数 就用上了, 不论在哪一层出问题, 只要你 reject, 那么错误都会进入到 **`根级执行链`**的 **`catch`**方法中
 
+catch方法 是捕获 执行链的错误,应该写在**`最后`**的位置
+
   ```js
   new Promise(function (resolve, reject) {
             setTimeout(function () {
@@ -193,9 +199,9 @@ new Promise(function(resolve, reject){
       })
   ```
 
-> 同学们,可能会疑惑,拿到每个执行操作都必须写 **`new Promise`**吗, 如果你的操作是异步的, 那么就得写,
+> 同学们,可能会疑惑,拿到每个执行操作都必须写 **`new Promise`**吗, 如果你的操作是异步的, 那么就得写**`new Promise`**,
 >
-> 如果你的操作时同步操作, 那么可以直接return 结果给下个执行
+> 如果你的操作是同步操作, 那么可以直接return 结果给下个执行
 
 ```js
  new Promise(function (resolve, reject) {
@@ -256,6 +262,8 @@ axios().then(function(data) {
 
 它堪称异步编程的**`终极解决方案`**, 但这并不意味着我们现在的代码不合理,不先进,
 
+因为 终极解决方案的是 :  **`异步编程`**用**`同步编程`**的方式去写
+
 ```js
 async getList () {
   let result =  await axios()
@@ -264,7 +272,7 @@ async getList () {
 // await 表示会等待 axios方法 resolve 
 ```
 
-async/await 直接将 回调地狱 和 链式编程 杀死了, 但是现阶段,我们先要把链式编程掌握
+async/await 直接将 **`回调地狱`** 和 **`链式编程`** 杀死了, 但是现阶段,我们先要把链式编程掌握
 
 不用心急,后面的项目,我们会慢慢熟悉 并且都应用到项目中
 
