@@ -288,7 +288,7 @@ async/await 直接将 **`回调地狱`** 和 **`链式编程`** 杀死了, 但�
                             resolve(Math.random())
                         }, 500)
                     }).then(function (data) {
-                        return Math.round(data * 5)
+                        return Math.ceil(data * 5)
                     }).then((data) => {
                         this.list = Array.from(Array(data), () => {
                             return 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582371180319&di=0e57b49af385be198823d93b9d1993b0&imgtype=0&src=http%3A%2F%2Fpic.feizl.com%2Fupload%2Fallimg%2F170615%2F09553S006-2.jpg'
@@ -313,7 +313,7 @@ $ npm -v #查看npm版本号
 > 还有就是 npm 的镜像问题,我们知道 npm的默认服务器在国外,由于网络关系,下载可能会非常慢,所以我们可以将 npm 设置成国内的地址 (淘宝镜像)https://registry.npm.taobao.org/
 
 ```bash
-$ npm  config get resgistry # 查看当前npm的地址是否是淘宝镜像 如果不是 可以设置
+$ npm  config get registry # 查看当前npm的地址是否是淘宝镜像 如果不是 可以设置
 ```
 
 > 设置淘宝镜像
@@ -424,7 +424,7 @@ $ json-server -w -p 3001 <json文件> # 以特定端口启动
 
  json-server所遵循的规范是业界较为通用的一种后端接口设计规范  **`restful`**
 
-> restful的核心理念是 用**`不同的请求类型`**发送**`同样一个请求标识`**, 去处理不同的请求
+> restful的核心理念是 用**`不同的请求类型`**发送**`同样一个请求标识`**, 去处理不同的操作
 
 比如,我们最常见的**`增删改查`**, 也被称之为 **`CRUD`**,在请求接口的时候,有一种通用的设计
 

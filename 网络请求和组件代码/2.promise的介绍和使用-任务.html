@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="test">Promise测试</button>
+        <!-- src想要获取变量  v-bind -->
+        <img style="width:200px;height: 200px; margin: 10px;" :src="item" alt="" v-for="item in list">
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: []
+            },
+            methods: {
+                test() {
+                    // Promise
+                    new Promise(function (resolve, reject) {
+                        setTimeout(function () {
+                            // 返回一个随机数
+                            resolve(Math.random())
+                        }, 500)
+                    }).then(function (rm) {
+                        return Math.ceil(rm * 10) // 向上取整  没有异步耗时任务的就是同步代码
+                    }).then((data) => {
+                        // 拿到一个随机的整数
+                        // 数据要显示在页面上的 => 数据响应式 生成对应长度的list地址
+                        this.list =
+                            Array.from(Array(data)).map(item => 'https://pics3.baidu.com/feed/83025aafa40f4bfb76888562fbd447f6f63618c9.jpeg?token=fc692c7aedd366cc3dcba01913922e4c&s=07A7CAA6DE123CDE3CC597B80300D00B')
+                    })
+                }
+            }
+        });
+        setTimeout(function () {
+            console.log("1")
+        }, 0)
+        console.log("2")
+        // async /await
+    </script>
+    <!-- 
+        promise 处理异步操作的内容
+        异步  => 有异步耗时任务的操作 setTimeout /setInterval/ ajax => 异步任务队列
+        同步 =>  只有同步代码执行完 才会执行异步任务队列 
+
+     -->
+</body>
+
+</html>
