@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>老高的表格案例</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-8">
+        <div class="page-header">
+          <h1>表格案例 <small>Follow me!!!</small></h1>
+        </div>
+        <!-- 添加框 -->
+        <div class="form-inline">
+          <div class="form-group">
+            <!-- v-model可以双向同步 数据就是视图 视图就是数据 -->
+            <!-- trim 的目的是去掉空格 -->
+            <input v-focus v-model.trim="name" type="text" class="form-control" placeholder="请输入你理想的公司" />
+          </div>
+          <!-- 注册点击事件 -->
+          <!-- disabled 变化的属性  动态绑定属性 disabled  true就是不可编辑 false就是可编辑 -->
+          <button :disabled="!name" @click="addItem" class="btn btn-success" type="submit">添加</button>
+        </div>
+        <!-- 搜索框 -->
+        <div class="form-inline" style="margin: 20px 0">
+          <div class="form-group">
+            <!-- 双向绑定  数据即视图 视图即数据 -->
+            <input v-model="searchVal" type="text" class="form-control" placeholder="搜索关键字" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <table class="table table-hover">
+          <thead>
+            <th>#</th>
+            <th>公司名称</th>
+            <th>时间</th>
+            <th>操作</th>
+          </thead>
+          <tbody>
+            <!-- 使用v-for将静态内容换成动态内容 -->
+            <!-- 循环生成谁 就在谁的标签上写 v-for -->
+            <tr v-for="(item,index) in filterList">
+              <td>{{ index + 1 }}</td>
+              <td>{{ item.name }}</td>
+              <!-- 通过过滤器对日期进行处理 -->
+              <td>{{ item.date | formatDate }}</td>
+              <td>
+                <!-- 给删除注册事件 给事件加修饰符 event.preventDefault()-->
+                <a href="#" @click.prevent="delItem(item.id)">删除</a>
+              </td>
+            </tr>
+            <!-- 这个tr是当没有数据的时候 才显示  根据条件决定该元素是否渲染-->
+            <!-- 第一种判断 -->
+            <!-- <tr v-if="list.length === 0">
+              <td colspan="4" style="color:#999">没有任何数据</td>
+            </tr> -->
+            <!-- 第二种判断 -->
+            <tr v-if="!list.length">
+              <td colspan="4" style="color:#999">没有任何数据</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- 引入vuejs -->
+  <script src="./vue.js"></script>
+  <!-- 引入 moment -->
+  <script src="./moment.min.js"></script>
+  <!-- 引入axios请求库 -->
+  <script src="./axios.min.js"></script>
+  <script>
+    // 实例化
+    var vm = new Vue({
+      el: '.container-fluid', // Vue实例所管理的视图
+      data: {
+        // 响应式数据
+        searchVal: '', // 作为绑定搜索框的值
+        name: '', // 作为双向绑定的数据
+        list: [],
+        // { name: '阿里巴巴', date: new Date() },
+        // { name: '字节跳动', date: new Date() },
+        // { name: '腾讯', date: new Date() }] // 定义表格数据
+      },
+      methods: {
+        // 获取数据方法
+        getList() {
+          axios.get('http://localhost:3000/company').then((result) => {
+            this.list = result.data
+          })
+        },
+
+        // 添加数据
+        addItem() {
+          this.list.unshift({ name: this.name, date: new Date() })
+          // unshift => 数组的方法 
+          // 清空输入框
+          this.name = ""
+        },
+        // 删除元素的方法
+        delItem(id) {
+          if (confirm("您是否要删除此条数据?")) {
+            // 如果确定要删除了
+            // 调用删除接口
+            axios.delete(`http://localhost:3000/company/${id}`).then(() => {
+              // 如果指向then意味着删除成功
+              this.getList()
+            })
+
+          }
+        }
+      }
+      ,
+      filters: {
+        // 格式化日期的过滤器 value就是我们的日期
+        formatDate(value) {
+          return moment(value).format("YYYY-MM-DD HH:mm:ss")
+        }
+      },
+      // 自定义指令
+      directives: {
+        focus: {
+          inserted(dom) {
+            dom.focus() // 自动聚焦
+          }
+        }
+      },
+      // 定义计算属性
+      computed: {
+        // 通过 输入的搜索内容 和列表内容 筛选出我们要的结果
+        // 计算属性必须要有返回值
+        filterList() {
+          // this指向 vm实例
+          //   this.list // 数组
+          // 关键字
+          // 搜索功能 在一个数组中 搜索和关键字相关的数据
+          return this.list.filter((item) => {
+            // 筛选条件 返回一个条件表达式
+            return item.name.includes(this.searchVal)
+          })
+        }
+      },
+      // 一定要注意created函数 是和 el/data/methods/filter/directive/computed 同级的
+      created() {
+        //   该函数会在Vue实例创建完毕之后执行
+        // this 同样 指向vm实例
+        this.getList() // 获取list数据
+      }
+    })
+  </script>
+</body>
+
+</html>

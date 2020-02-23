@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="getHandSomeList()">获取四大美男数据</button>
+    <button onclick="deleteBeauty()">删除最美的一个</button>
+    <button onclick="addBeauty()">新增一个最美的</button>
+    <button onclick="updateBeauty()">修改一个最美的</button>
+
+    <script src="./axios.min.js"></script>
+    <script>
+        function getHandSomeList() {
+
+            // 获取内容
+            // CRUD  => 增删改查 查 => GET
+            // axios() axios.get()  new  Promise()
+            axios.get("http://localhost:3000/handsome").then(function (result) {
+                console.log(result.data);
+
+            })
+        }
+        function deleteBeauty() {
+            // 删除需要 delete类型
+            axios.delete("http://localhost:3000/handsome/4").then(function () {
+                console.log("成功将最美的男子删除")
+            })
+        }
+        function addBeauty() {
+            // axios.post(url, {body参数})
+            // 新增最美男子
+            axios.post("http://localhost:3000/handsome", { name: '张永涛' }).then(function () {
+                console.log("成功添加美男子一枚")
+            })
+        }
+        function updateBeauty() {
+            // 修改一个美男子的名号
+            // put  axios.put(url, { body参数 })
+            axios.put("http://localhost:3000/handsome/1", { name: '孙小宝' }).then(function () {
+                console.log("成功将美男子改名")
+            })
+        }
+    </script>
+</body>
+
+</html>

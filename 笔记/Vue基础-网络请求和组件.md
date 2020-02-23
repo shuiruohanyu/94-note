@@ -465,7 +465,7 @@ $ json-server -w -p 3001 <json文件> # 以特定端口启动
 
 ## 基础-axios-介绍-及基本使用
 
-我们已经有了后台,现在来看看我们的请求工具axios怎么使用
+我们已经有了后台,现在来看看我们的请求工具**`axios`**怎么使用
 
 >**`目标`**:掌握如何使用axios 
 
@@ -524,23 +524,27 @@ console.log(res);
 
 网络请求的要素学习完毕了,尝试将表格案例做成**`前后端`**的吧
 
+第一步 首先要确定你已经有了接口服务
+
 >**`目标-任务`** 将表格案例中列表数据实现用axios请求
 
 1. 引入axios资源
 2. 在创建Vue实例之后,查询表格数据 
 3.  赋值给data数据
 
-**`注意`** created 是一个生命周期函数, 会在Vue实例创建完毕之后执行, 后面我们会讲到
+**`注意`** **`created`** 是一个生命周期函数, 会在Vue实例创建完毕之后执行, 后面我们会讲到
 
 ​        created中的this也是指向 vm实例
 
 >```js
->created() {
->// 渲染完成事件
->axios.get("http://localhost:3000/brands").then(result => {
->this.list = result.data;
->});
->}
+>      // 一定要注意created函数 是和 el/data/methods/filter/directive/computed 同级的
+>      created() {
+>        //   该函数会在Vue实例创建完毕之后执行
+>        // this 同样 指向vm实例
+>        axios.get('http://localhost:3000/company').then((result) => {
+>          this.list = result.data
+>        })
+>      }
 >```
 
 ## 基础-表格案例-axios-删除商品
@@ -552,15 +556,18 @@ console.log(res);
 3. 删除完成后重新调用请求接口 
 
 ```js
-delItem(id) {
-  if (confirm("确定删除此条记录")) {
-   axios
-   .delete("http://localhost:3000/brands/" + id)
-    .then(result => {
-    this.getList(); // 重新调用拉取数据
-   });
-  }
-}
+        // 删除元素的方法
+        delItem(id) {
+          if (confirm("您是否要删除此条数据?")) {
+            // 如果确定要删除了
+            // 调用删除接口
+            axios.delete(`http://localhost:3000/company/${id}`).then(() => {
+              // 如果指向then意味着删除成功
+              this.getList()
+            })
+
+          }
+        }
 ```
 
 
@@ -620,13 +627,11 @@ data: {
 
 此时就可以在watch的函数内容实现我们的搜索功能
 
-​         1. 监听搜索内容框 
+         1. 监听搜索内容框 
+            2.  在监听函数中实现搜索逻辑     
 
-            2. 在监听函数中实现搜索逻辑
-
-​         3. 将返回结果设置给 当前数据对象
-
-​    4.   更换数据对象
+3. 将返回结果设置给 当前数据对象
+4.  更换数据对象
 
 ```js
 watch: {
