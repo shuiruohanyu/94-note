@@ -60,7 +60,7 @@ Vuejs/Reactjs/Angularjs  都是客户端渲染, 也就是先请求js,然后js在
 
 ![image-20200224155434855](assets/image-20200224155434855.png)
 
-## 基础-路由-vue-router-文档
+## 基础-路由-vue-router-介绍及使用
 
 **`目标`**  了解vue-router是什么并且根据体验步骤使用vue-router
 
@@ -81,7 +81,7 @@ vue-router实际上就是根据不同的**`请求地址`** 而**`显示不同的
 <router-view></router-view>
 ```
 
-> router-link中的to属性表示点击该导航要跳到哪个路由
+> router-link中的to属性表示点击该导航要跳到哪个路由, 一般的路由地址以/开头
 >
 > router-view 是用来承载 要显示在页面的组件的, 容器是必须有的
 
@@ -93,7 +93,7 @@ new  VueRouter()
 
 > 路由对象也需要实例化
 
-4. 配置路由对象的实例选项, **`routes`**,也就是路由规则表
+4. 配置路由对象的实例选项, **`routes`**,也就是**`路由规则表`**
 
 ```js
 // 配置路由规则
@@ -107,7 +107,7 @@ routes: [
 
 > routes是一个数组, 数组里每一条记录代表一个路由规则
 >
-> path: 地址  component: 组件 name : 规则名称
+> path: 地址(一般以/开头)  component: 组件对象() name : 规则名称
 
 5. 将路由对象挂载Vue实例上
 

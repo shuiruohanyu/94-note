@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- router-link中的to相当于 a href 但是 需要写# -->
+        <!-- 一般的路由地址 以/开头 -->
+        <router-link to="/wyz">吴彦祖</router-link>
+        <router-link to="/sxb">宋小宝</router-link>
+
+        <!-- 容器是专门承载组件变化的 必须得有 -->
+        <!-- 2. 设置导航和容器 -->
+        <div style="margin: 30x auto;">
+            <router-view></router-view>
+
+        </div>
+    </div>
+    <!--1. 引入vuejs 和  vue-router -->
+    <script src="./vue.js"></script>
+    <script src="./vue-router.js"></script>
+    <script>
+        // 直接挂在路由上的组件 不需要注册 
+        var wyzObj = {
+            template: `<img style='width: 400px;height:400px' src='http://f.zhulong.com/v1/tfs/T1XoW_BvET1RCvBVdK.jpg' />`
+
+        } // 吴彦祖的组件对象
+        var sxbObj = {
+            template: `<img style='width: 400px;height:400px' src="http://imgsrc.baidu.com/forum/w=580/sign=84b3a06f4e086e066aa83f4332097b5a/4cd3050828381f30d50eb1f7ab014c086f06f051.jpg" />`
+
+        } // 宋小宝组件对象
+        // 全局对象 VueRouter
+        var router = new VueRouter({
+            routes: [{
+                name: '', // name可以不写
+                path: '/wyz', // 地址
+                component: wyzObj // 组件
+            }, {
+                path: '/sxb',
+                component: sxbObj
+            }]
+        })  // 实例化路由对象  配置路由表
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            //  router: router // 将router实例给router选项
+            router  // 加router挂载到vue实例上
+        });
+    </script>
+</body>
+
+</html>
