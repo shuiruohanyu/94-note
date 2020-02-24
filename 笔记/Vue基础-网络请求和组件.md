@@ -955,8 +955,8 @@ v-on:自定义事件 或者 @自定义事件名
 
 ```js 
     listItemChange(num) {
-            alert(num)
-     }
+         alert(num)
+    }
 ```
 
 
@@ -966,10 +966,26 @@ v-on:自定义事件 或者 @自定义事件名
 > 连续两次传递, 将add-count中的数据传递了 Vue实例
 >
 > 儿子(add-count)  => 父亲(list-item)  => 爷爷(Vue实例)
->
+
+```js
+ listChange(id, num) {
+                    // Vue实例拿到了数 要进行自我更新
+                    // alert(id + '------' + num)
+                    // 爷爷级的组件 vue实例 拿到了 id 和 数字 
+                    let obj = this.list.find(item => item.id === id) // 找到符合条件的id
+                    obj.count = num //将obj的count值改成num值
+                }
+```
+
+上面的代码,实际上就改 **`爷爷组件`**的中的数据, list数据变化了, 又因为 list数据通过props作用给了list-item组件
+
 > 接下来,就是在Vue实例中,用方法将数据更新到位, 数据变化了,Props通过连带影响 子组件的数量也变化了
 
+因为是响应式数据, 所以props数据变化,就会造成页面的更新
 
+
+
+![image-20200224144050165](assets/image-20200224144050165.png)
 
 > 注意:这个例子对于Vue基础阶段的你来说**`极其艰难`**, 由于直播授课的需要,大部分同学认为我们学的东西过于简单,所以通过这个例子,来了解下真正的业务怎么做
 

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .menu {
+            margin: 20px auto;
+            width: 800px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .container {
+            margin: 20px auto;
+            width: 800px;
+            height: 600px;
+            border: 2px solid #ccc;
+            background-size: cover;
+        }
+
+        .menu a {
+            background-color: chocolate;
+            color: #fff;
+            font-size: 20px;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='menu'>
+        <!-- 导航  一个地址对应一个模块-->
+        <a href="#xy">西游记</a>
+        <a href="#sh">水浒传</a>
+        <a href="#hl">红楼梦</a>
+        <a href="#sg">三国演义</a>
+    </div>
+    <!-- 容器  专门来承载组件的变化 -->
+    <div class='container' id="container">
+
+    </div>
+    <!-- 监视hash值得改变 根据hash值 进行 对应的模块切换  -->
+    <script>
+        // 声明一个函数
+        var func = function () {
+            var dom = document.getElementById("container")
+            // 当hash值 变化时 会执行该函数
+            var path = location.hash.substr(1) // 是当前hash地址
+            // 根据hash地址匹配对应的组件
+            // 路由表 => 一个地址 对应一个模块
+            // xy sh   sg hl
+            // 用图片来代替 模块
+            switch (path) {
+                case "xy":
+                    // 将西游的地址设置给背景图片
+                    dom.style.backgroundImage = `url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582540356032&di=e60808755429ca8089d0044f5a9477c7&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180605%2F1317365626934198b4e83caa87ff6874.jpeg)`
+                    break;
+                case "sh":
+                    dom.style.backgroundImage = `url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582540522842&di=f2bccc1eff26d2a29bebf333c17bcc8f&imgtype=0&src=http%3A%2F%2Fpics3.baidu.com%2Ffeed%2F2934349b033b5bb5dfcaaea67b89ed3fb600bc2d.jpeg%3Ftoken%3D50f403ee81c5a6b42616e35bef147142%26s%3DC7A49E4072BECE7F5C016C0803007090)`
+                    break;
+                case "sg":
+                    dom.style.backgroundImage = `url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582540651697&di=014064a68005a4b0018994745e96744b&imgtype=0&src=http%3A%2F%2Fpccoo.cn%2Fnews%2F20130522%2F201305222113532630.jpg)`
+                    break;
+                case "hl":
+                    dom.style.backgroundImage = `url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582540678434&di=0320d3f9f2251280ae55afe67b6f5002&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn%2F20170916%2Fd712-fykywuc4922648.png)`
+                    break;
+                default:
+                    break;
+            }
+        }
+        func() // 自执行func
+        // 监视hash值 的变化
+        window.onhashchange = func   // 一旦hash值变化 就会执行
+    </script>
+</body>
+<!-- 
+ 1. 西游记 / 水浒传 / 红楼梦 / 三国演义  四个 导航分别指向 四个人物
+2. 点击对应的名著, 出现对应的人物
+3. 刷新页面, 上一次所切换的人物还在 
+ -->
+
+</html>

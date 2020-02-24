@@ -148,7 +148,10 @@
             methods: {
                 listChange(id, num) {
                     // Vue实例拿到了数 要进行自我更新
-                    alert(id + '------' + num)
+                    // alert(id + '------' + num)
+                    // 爷爷级的组件 vue实例 拿到了 id 和 数字 
+                    let obj = this.list.find(item => item.id === id) // 找到符合条件的id
+                    obj.count = num //将obj的count值改成num值
                 }
             },
             components: {} // 这是注册给vue实例的 只能在vue实例上使用
