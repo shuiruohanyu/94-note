@@ -122,6 +122,16 @@ router
 
 * 尝试用vue-router实现  古代四大美女 的路由 匹配四个美女的组件
 
+## 安装DevTools的Vue调试工具
+
+> vue-devtools是一款基于chrome浏览器的插件，用于调试vue应用，这可以极大地提高我们的调试效率。接下来我们就介绍一下vue-devtools的安装。
+
+游览器输入地址“**`chrome://extensions/`**”进入扩展程序页面，点击“加载已解压的扩展程序...”按钮，选择vue-devtools下的文件。
+
+git中提供了 **`devtools`**  的压缩包,直接加载即可
+
+> 然后, 在调试中就可以看到Vue的调试节点.可以通过组件的节点 查看组件的 **`data/props/computed`**
+
 ## 基础-路由-vue-router-动态路由传参 和 query传参
 
 **`目标`** 掌握 Vue-router中路由的传参方式
