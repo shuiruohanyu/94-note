@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app {
+            width: 1000px;
+            margin: 30px auto;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .list-item {
+            margin: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .list-item img {
+            width: 280px;
+            height: 200px;
+        }
+
+        .info {
+            height: 60px;
+            padding: 0 10px;
+            line-height: 60px;
+            font-size: 20px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .add-count {
+            position: absolute;
+            right: 10px;
+            bottom: 0;
+        }
+
+        .add-count span {
+            display: inline-block;
+
+            text-align: center;
+            line-height: 35px;
+            font-size: 30px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .addcut-span {
+            color: #fff;
+            background-color: rgb(36, 100, 236);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 使用组件 -->
+
+        <list-item v-for="item in 20" :key="item" />
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        // abc / abc-def
+        // 定义一个全局组件 list-item, 为商品内容, 图片, 商品信息
+        // 应该在 Vue实例化之前执行 全局组件的注册  在任何位置都可以使用
+        Vue.component("list-item", {
+            // 组件内容
+            template: `
+              <div class='list-item'>
+                   <div class='img'>
+                      <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582385941145&di=c4ebf24db1509ebe93adca0c137c1938&imgtype=0&src=http%3A%2F%2Fimg.improve-yourmemory.com%2Fpic%2F72071791ca96de6e8983c1310190e0fa-2.jpg" />
+                   </div>
+                   <div class='info'>
+                      <span>新奥尔良烤肉</span>
+                      <add-count />
+                   </div>
+              </div>`, // 要求: 有且只有一个根节点
+            components: {
+                "add-count": {
+                    template: `
+                    <div class='add-count'>
+                       <span class='addcut-span'>-</span>
+                       <span>0</span>
+                       <span class='addcut-span'>+</span>
+                    </div>`
+                }
+            } // 这是在 组件list-item的实例上注册的 只能用在 list-item上
+
+
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            components: {} // 这是注册给vue实例的 只能在vue实例上使用
+        });
+    </script>
+    <!-- 
+        实现 组件的嵌套 
+     -->
+</body>
+
+</html>

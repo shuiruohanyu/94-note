@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app {
+            width: 1000px;
+            margin: 30px auto;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .list-item {
+            margin: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .list-item img {
+            width: 280px;
+            height: 200px;
+        }
+
+        .info {
+            height: 60px;
+            padding: 0 10px;
+            line-height: 60px;
+            font-size: 20px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .add-count {
+            position: absolute;
+            right: 10px;
+            bottom: 0;
+        }
+
+        .add-count span {
+            display: inline-block;
+
+            text-align: center;
+            line-height: 35px;
+            font-size: 30px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .addcut-span {
+            color: #fff;
+            background-color: rgb(36, 100, 236);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 使用组件  循环list 生成若干个list-item -->
+        <list-item :food="item" v-for="item in list" />
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        // abc / abc-def
+        // 定义一个全局组件 list-item, 为商品内容, 图片, 商品信息
+        // 应该在 Vue实例化之前执行 全局组件的注册  在任何位置都可以使用
+        Vue.component("list-item", {
+            props: ["food"], // 用food来接收props属性 vuejs内部实现
+            // 组件内容
+            template: `
+              <div class='list-item'>
+                   <div class='img'>
+                      <img :src="food.img" />
+                   </div>
+                   <div class='info'>
+                      <span>{{ food.title }}</span>
+                      <add-count :num="food.count" />
+                   </div>
+              </div>`, // 要求: 有且只有一个根节点
+            components: {
+                "add-count": {
+                    props: ["num"], // props写了属性就有的接  不写就没得接
+                    template: `
+                    <div class='add-count'>
+                       <span v-if="num" class='addcut-span'>-</span>
+                       <span v-if="num">{{ num }}</span>
+                       <span class='addcut-span'>+</span>
+                    </div>`
+                }
+            } // 这是在 组件list-item的实例上注册的 只能用在 list-item上
+
+
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                // vue实例的数据
+                list: [{
+                    id: 1, // 表示
+                    img: 'http://img4.imgtn.bdimg.com/it/u=1126716551,3134048915&fm=26&gp=0.jpg', // 菜品图片
+                    count: 0, // 当前菜品点了几分
+                    title: '新奥尔良烤肉' // 菜品名称
+                }, {
+                    id: 2, // 表示
+                    img: 'http://attachments.gfan.com/forum/201503/18/210259bqy79b8e7zfykqzk.jpg', // 菜品图片
+                    count: 0, // 当前菜品点了几分
+                    title: '杭州烧麦' // 菜品名称
+                }, {
+                    id: 3, // 表示
+                    img: 'http://img4.imgtn.bdimg.com/it/u=216433551,3486797473&fm=26&gp=0.jpg', // 菜品图片
+                    count: 0, // 当前菜品点了几分
+                    title: '火锅' // 菜品名称
+                }, {
+                    id: 4, // 表示
+                    img: 'http://img.cwq.com/201706/1498276448815536.jpeg', // 菜品图片
+                    count: 0, // 当前菜品点了几分
+                    title: '龙虾' // 菜品名称
+                }] // list数组 是Vue实例的数据, 这里面应该是所有菜品的数据
+            },
+            methods: {},
+            components: {} // 这是注册给vue实例的 只能在vue实例上使用
+        });
+    </script>
+    <!-- 
+        实现 组件的嵌套 
+     -->
+</body>
+
+</html>
