@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* 最终状态 */
+        .main {
+            margin: 0 auto;
+            width: 600px;
+            height: 600px;
+            background-size: cover;
+            background-image: url("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2732989282,3677770873&fm=26&gp=0.jpg");
+        }
+
+        /* 2. 写样式 针对 显示隐藏 几个状态的样式 */
+        /* v-enter是从隐藏到显示的是初始状态 */
+        .max-enter,
+        .max-leave-to {
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+        }
+
+        /*从显示到隐藏的最终状态  */
+        /* .max-enter-to {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+        } */
+
+        /* 过渡属性 */
+        .max-enter-active,
+        .max-leave-active {
+            transition: all 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="show=!show">显示/隐藏</button>
+        <!-- 1.用transition组件包裹div  给transition name属性 如果不给 也可以-->
+        <transition name="max">
+            <div v-if="show" class='main'></div>
+        </transition>
+    </div>
+    <!-- 
+        Vuejs提供了动画过渡
+        要对元素进行显示或者隐藏 才能够进行过渡
+     -->
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                show: false
+            },
+            methods: {
+            }
+        });
+    </script>
+</body>
+
+</html>

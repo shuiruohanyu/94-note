@@ -352,13 +352,13 @@ this.$router.back() // 回到上一个页面 相当于 go(-1)
 >- 动态组件
 >- 组件根节点
 >
->* 基本用法就是给我们需要动画的标签外面嵌套**`transition`**标签 ,并且设置name属性
+>* 基本用法就是给我们需要动画的标签外面包裹**`transition`**标签 ,并且设置name属性
 >* Vue 提供了 `transition` 的封装组件，在下列元素更新,移除，新增 情形中，可以给任何元素和组件添加进入/离开过渡
 >* ![1571666543856](assets/1571666543856.png)
 >
 >```html
 ><transition name="fade"> 
-><div v-show="isShow" class="box"></div>
+>  <div v-show="isShow" class="box"></div>
 ></transition>
 >```
 >
