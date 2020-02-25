@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .second {
+            width: 800px;
+            height: 600px;
+            margin: 20px auto;
+            background-color: chocolate;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 根组件 -->
+        <router-link to="/main">主食</router-link>
+        <router-link to="/nonstapefood">副食</router-link>
+        <router-link to="/drink">饮料</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="./vue-router.js"></script>
+    <script>
+        var mainObj = {
+            // 1. 需要在主食的一级路由组件里提供二级路由容器
+            template: `<div>
+              <h1>我国有哪些美食?</h1>
+              <router-link to='/main/food?index=0'>小肉刀削面</router-link>
+              <router-link to='/main/food?index=1'  >油泼面</router-link>
+              <router-link to='/main/food?index=2' >粘豆包</router-link>
+              <router-link to='/main/food?index=3' >烙饼卷大葱</router-link>
+              <router-link  to='/main/food?index=4'>煎饼果子</router-link>
+
+              <div class='second'> <router-view /></div>
+            </div>`
+        }
+        var stapeObj = {
+            template: `<div>
+             副食
+            </div>`
+        }
+        var drinkObj = {
+            // 1.在一级路由组件内部 加二级路由容器
+            template: `<div>
+                饮料 
+                <router-link to="/drink/kel" >可乐</router-link>
+                <router-link to="/drink/xb">雪碧</router-link>
+
+                <router-view />
+            </div>`
+        }
+        var router = new VueRouter({
+            routes: [{
+                path: '/',
+                redirect: '/main'
+            }, {
+                path: '/main',
+                component: mainObj,
+                // 在一级路由的组件下 建立二级路由 => 提供二级路由的容器 => 二级路由容器需要写在一级路由的组件里面
+                // 2. 需要在一级路由的路由表对象下 提供children属性
+                // 二级路由表
+                children: [
+                    {
+                        // => a => /main/a  /a =>  /a 
+                        //  path: 'a' // 二级路由地址  不以 / 开头的话 , 就会和一级路由地址进行拼接
+                        path: 'food', // 如果地址以 /开头 就会以该地址为完整地址
+                        component: {
+                            // 作为二级路由的组件
+                            template: `<div>
+                               您选择的美食是:  {{  $route.query.index }}
+                              <img :src="currentSrc" />
+                            </div>`,
+                            data() {
+                                return {
+                                    list: [
+                                        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582622776869&di=b95bcceec01a7ec541c6174649b8198c&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fbainuo%2Fcrop%3D0%2C32%2C1024%2C620%3Bw%3D720%3Bq%3D79%2Fsign%3Dcc05b03f317adab4299f4103b6e49f2f%2F5882b2b7d0a20cf405b1fdc871094b36acaf9987.jpg",
+                                        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582622824142&di=88a8562e88fcaadb97d96c18d61aef96&imgtype=0&src=http%3A%2F%2Fi1.chuimg.com%2Ff80cdf357cf447c783d0fe00bdb01e2e_1024w_1280h.jpg%402o_50sh_1pr_1l_600w_90q_1wh",
+                                        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582622855370&di=e4e33219eb4181b27d5fed83194ac38c&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fbaike%2Fpic%2Fitem%2F91ef76c6a7efce1b32512da5a151f3deb48f6563.jpg",
+                                        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582622889685&di=ee5f833a9c51f1d1eaec32c9ad7eba98&imgtype=0&src=http%3A%2F%2Fspider.nosdn.127.net%2Feebfdc5c2bfe947028adec0f1b695868.jpeg",
+                                        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582622908944&di=c7d2cc2a2bec07beeda22adde7ec9c52&imgtype=0&src=http%3A%2F%2Fp1.meituan.net%2Fdeal%2Fb8402ab84aa23662aa6cebb63c1f894f369583.jpg"
+                                    ]
+                                }
+                            },
+                            computed: {
+                                // 计算属性  必须要有返回值
+                                currentSrc() {
+                                    // this 指向 vm实例 组件实例 
+                                    return this.list[this.$route.query.index]
+                                }
+
+                            }
+                        }
+                    }
+                ]
+            }, {
+                path: '/nonstapefood',
+                component: stapeObj
+            }, {
+                path: '/drink',
+                component: drinkObj,
+                // 2. 在一级路由组件的路由表下 加 children
+                children: [{
+                    path: '/drink/kel',
+                    component: {
+                        template: `<div>可乐</div>`
+                    }
+                }, {
+                    path: '/drink/xb',
+                    component: {
+                        template: `<div>雪碧</div>`
+                    }
+                }]
+            }]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        });
+    </script>
+</body>
+
+</html>
