@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to='/list'>列表</router-link>
+        <!-- <router-link>详情</router-link> -->
+        <router-view></router-view>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="./vue-router.js"></script>
+    <script>
+        // 列表组件对象
+        var listObj = {
+            // 2. 在 router-link中传参  to =/info/西游记
+            //  查询参数传参 1.  在地址后面 拼接 ?属性=值
+            template: `<div>
+                <h3>动态路由跳转</h3>
+                <div>
+                  <li  v-for="item in list">
+                    <router-link :to="'/info/'+item" >{{ item }}</router-link>
+                </li>
+                </div>
+                <h3>查询参数跳转</h3>
+                <div>
+                  <li  v-for="item in list">
+                    <router-link :to="'/info?name='+item" >{{ item }}</router-link>
+                </li>
+            </div>`,
+            data() {
+                return {
+                    list: ["西游记", "水浒传", "红楼梦", "三国演义"]
+                }
+            }
+        }
+        // 详情组件对象
+        // 2. query传参 直接通过$route.query.属性获取值
+        var infoObj = {
+            template: `<div>
+                当前所看到的名著是: {{ $route.params.name }}  {{ $route.query.name }}  
+            </div>`
+        }
+        // 参数传递 一般用于 (地址)列表 到详情(地址)
+        var router = new VueRouter({
+            routes: [{
+                path: '/list',
+                component: listObj
+            }, {
+                // ?的目的是表示 该动态路由参数 可传可不传
+                path: '/info/:name?', // 1. 在接收参数的路由规则 中添加参数 :name代表/后面内容是动态的
+                component: infoObj
+
+            }]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        });
+    </script>
+</body>
+
+</html>

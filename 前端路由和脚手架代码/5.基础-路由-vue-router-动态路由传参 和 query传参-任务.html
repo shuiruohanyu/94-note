@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/bkList">百科列表</router-link>
+        <router-view></router-view>
+    </div>
+
+    <script src="./vue.js"></script>
+    <script src="./vue-router.js"></script>
+    <script>
+        var listObj = {
+            template: `<div>
+                 <router-link to="/bkInfo/钱学森">钱学森</router-link>
+                 <router-link to="/bkInfo?name=邓稼先">邓稼先</router-link>
+            </div>`
+        }
+        var infoObj = {
+            template: `<div>
+               我最敬佩的科学家,国之重器 {{ $route.params.name  }}{{ $route.query.name  }}先生
+            </div>`
+        }
+        var router = new VueRouter({
+            routes: [{
+                path: '/bkList',
+                component: listObj
+            }, {
+                path: '/bkInfo/:name?', // 动态路由 加了问号 表示name可以不传 也能匹配到 下面的组件
+                component: infoObj
+            }]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        });
+    </script>
+</body>
+
+</html>

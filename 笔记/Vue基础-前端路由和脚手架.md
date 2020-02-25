@@ -126,7 +126,7 @@ router
 
 > vue-devtools是一款基于chrome浏览器的插件，用于调试vue应用，这可以极大地提高我们的调试效率。接下来我们就介绍一下vue-devtools的安装。
 
-游览器输入地址“**`chrome://extensions/`**”进入扩展程序页面，点击“加载已解压的扩展程序...”按钮，选择vue-devtools下的文件。
+谷歌游览器输入地址“**`chrome://extensions/`**”进入扩展程序页面，点击“加载已解压的扩展程序...”按钮，选择vue-devtools下的文件。
 
 git中提供了 **`devtools`**  的压缩包,直接加载即可
 
@@ -144,7 +144,7 @@ git中提供了 **`devtools`**  的压缩包,直接加载即可
 
 * **`第一种`**: 动态路由传参
 
-1. 路由规则中增加参数，在path最后增加 **:id**
+1. (**`接收参数的`**)路由规则中增加参数，在path最后增加 **:id**, (id是可以随意命名的)
 
 ```json
 { name: 'users', path: '/users/:id', component: Users },
@@ -175,7 +175,7 @@ var Users = {
 
 > **`/users/:id?`**这么写表示, 不传id参数也可以匹配 组件
 
-* **`第二种`** 查询参数传参
+* **`第二种`** 查询参数query传参
 
 除了通过 第一种形式传参, 我们还可以通过 在地址后面 **`? 名称=值`**的方式 进行传参, 如果有多个,可以**`用 &分割`**
 
@@ -216,7 +216,7 @@ var Users = {
 <router-link to="/sport">体育</router-link>
 ```
 
-> 可以是一个对象,对象中可以是 path 地址 或者name
+> 可以是一个对象,对象中可以是 path 地址 或者 name
 
 ```html
 <router-link :to="{path:'/sport'}">体育</router-link>
@@ -236,7 +236,9 @@ var Users = {
 
 >  审查导航元素,可以发现 激活样式
 
-* 当希望某个页面被强制中转时  可采用redirect 进行路由重定向设置
+* 当希望某个页面被强制中转时  可采用**`redirect`** 进行**`路由重定向`**设置   
+
+=>  A页面 (拦截请求) =>强制中转B页面, 只需要在A页面的路由位置 写一个redirect属性
 
 ```json
 {

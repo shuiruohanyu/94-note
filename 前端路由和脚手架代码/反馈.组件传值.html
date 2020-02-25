@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 1. 在传递数据的标签上定义属性 (给谁传就在谁的标签上写属性) -->
+        <!-- 子传父 第二步 2. 需要在子组件的标签上监听子组件的事件 -->
+        <child :title="name" @changename="change" />
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        // 父子组件传值
+        // Vue实例可以看做一个根组件
+        // 组件对象
+        var obj = {
+            // 3. 通过插值表达式 显示props属性
+            template: `<div>
+            父组件传过来的数据: {{ title }}
+             <button @click="changeParent">改变父组件的值</button>
+            </div>`,
+            // 2. 在子组件中用props接收属性
+            props: ['title'],
+            methods: {
+                changeParent() {
+                    //    这里希望改变 父组件中的name值
+                    // 子传父 第一步 1. 在子组件中触发自定义事件 $emit(事件名(全小写), 若干参数)
+                    this.$emit("changename", "李四")
+                }
+            }
+        }
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '张三'
+            },
+            methods: {
+                change(name) {
+                    //    子传父 最后一步 3. 父组件拿到数据 => 想干啥干啥
+                    this.name = name
+                }
+            },
+            components: {
+                "child": obj  // 注册一个名为child的局部组件对象
+            }
+        });
+    </script>
+</body>
+
+</html>

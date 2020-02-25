@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 1200px;
+            height: 600px;
+            margin: 20px auto;
+        }
+
+        .menu {
+            width: 1200px;
+            height: 60px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .menu a {
+            color: #fff;
+            height: 60px;
+            display: inline-block;
+            line-height: 60px;
+            text-align: center;
+            background-color: chocolate;
+            font-size: 20px;
+            padding: 0 30px;
+        }
+
+        .mv {
+            width: 100%;
+            height: 100%;
+        }
+
+        .router-link-active {
+            font-weight: bold;
+            color: red !important;
+            border: 2px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class='menu'>
+            <!-- 导航 -->
+            <router-link to="/xs">西施</router-link>
+            <!-- 对象的path形式跳转 -->
+            <router-link :to="{ path: '/xs' }">西施(对象path)</router-link>
+            <!-- 对象的name形式跳转 -->
+            <router-link :to="{ name:'abc'}">西施(对象name)</router-link>
+
+            <router-link to="/dc">貂蝉</router-link>
+            <router-link to="/wzj">王昭君</router-link>
+            <router-link to="/yyh">杨玉环</router-link>
+        </div>
+        <!-- Vue实例管理的视图中设置导航和容器 -->
+        <div class='container'>
+            <router-view></router-view>
+        </div>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="./vue-router.js"></script>
+    <script>
+        var xsObj = {
+            template: `<img class='mv' src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582544348193&di=60fec858feb16857274a97fb58be1753&imgtype=0&src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F8838722640%2F1000" />`
+        }
+        var dcObj = {
+            template: `<img class='mv' src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1719581135,707605441&fm=26&gp=0.jpg" />`
+
+        }
+        var wzjObj = {
+            template: `<img class='mv' src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582544396707&di=7da12bd552e01f3dd4e201be38528b31&imgtype=jpg&src=http%3A%2F%2Fimg1.imgtn.bdimg.com%2Fit%2Fu%3D3412190326%2C992311558%26fm%3D214%26gp%3D0.jpg" />`
+
+        }
+        var yyhObj = {
+            template: `<img class='mv' src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582544412152&di=d1588651ef6ecc2af86c31451830ce77&imgtype=0&src=http%3A%2F%2Fimg.jk51.com%2Fimg_jk51%2F48779098.jpeg" />`
+
+        }
+
+        var router = new VueRouter({
+            routes: [{
+                path: '/',  // 默认地址
+                redirect: '/xs' // 强制跳转到一个默认组件
+                // component
+            }, {
+                name: 'abc',
+                path: '/xs',
+                component: xsObj,
+
+            }, {
+                path: '/dc',
+                component: dcObj
+            }, {
+                path: '/wzj',
+                component: wzjObj
+            }, {
+                path: '/yyh',
+                component: yyhObj
+            }]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router  // 挂载
+        });
+    </script>
+</body>
+
+</html>
