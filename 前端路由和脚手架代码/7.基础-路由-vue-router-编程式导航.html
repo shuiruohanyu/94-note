@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 容器 -->
+        <router-view></router-view>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="./vue-router.js"></script>
+    <script>
+        var bjObj = {
+            template: `<div>
+            我是北京
+            <button @click="goSH">去上海</button>
+            </div>`,
+            methods: {
+                goSH() {
+                    // 跳转到上海
+                    this.$router.push('/sh') // push表示追加一条历史记录
+                }
+            }
+        }
+        var shObj = {
+            template: `<div>
+            我是上海
+            <button @click="goSZ">去深圳</button>
+            <button @click="goGZ">去广州</button>
+            </div>`,
+            methods: {
+                // 去深圳
+                goSZ() {
+                    this.$router.replace('/sz') // replace表示会把当前的地址换成新地址
+                },
+                goGZ() {
+                    this.$router.push("/gz") // 追加一条到广州的记录
+                }
+            }
+        }
+        var szObj = {
+            template: `<div>
+            我是深圳
+            </div>`
+        }
+        var gzObj = {
+            template: `<div>
+            我是广州
+            <button @click="goBj">到北京</button>
+            </div>`,
+            methods: {
+                goBj() {
+                    // this.$router.push/replace
+                    this.$router.go(-2) // 回退两步
+                }
+            }
+        }
+        var router = new VueRouter({
+            routes: [
+                {
+                    path: '/',
+                    redirect: '/bj' // 将/强制跳转到北京
+                },
+                {
+                    path: '/bj',
+                    component: bjObj
+                }, {
+                    path: '/sh',
+                    component: shObj
+                }, {
+                    path: '/sz',
+                    component: szObj
+                }, {
+                    path: '/gz',
+                    component: gzObj
+                }]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        });
+    </script>
+</body>
+<!-- 
+    1. 实例化路由,定义四个组件  北京/上海/ 深圳/广州
+2. 北京跳到上海, 上海可以返回到北京
+3. 上海跳到深圳, 深圳不能返回上海
+4. 上海到广州, 广州可以直接到北京 
+ -->
+
+</html>

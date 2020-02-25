@@ -265,6 +265,33 @@ var Users = {
 * go(数字) 代表希望是前进还是回退,当数字大于0 时 就是前进 n(数字)次,小于0时,就是后退n(数字)次
 * back 表示**`回到上一个`**页面
 
+push
+
+```js
+this.$router.push(参数)  // 参数 1. 字符串(地址) 2. 对象 { path } / {name}
+```
+
+replace
+
+```js
+this.$router.replace(参数)  // 参数 1. 字符串(地址) 2. 对象 { path } / {name}
+```
+
+go
+
+```js
+this.$router.go(-1) // 后退1次
+this.$router.go(2)  // 前进两步
+```
+
+back
+
+```js
+this.$router.back() // 回到上一个页面 相当于 go(-1)
+```
+
+
+
 **`任务`**
 
 用编程式导航实现
