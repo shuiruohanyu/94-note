@@ -666,7 +666,7 @@ new Vue({
 npm i  bootstrap@3.3.7
 ```
 
-安装完成之后 ,在入口处引入js文件
+安装完成之后 ,在入口处引入css文件
 
 ```js
 import "./../node_modules/bootstrap/dist/css/bootstrap.css"; // 引入 bootstarp的样式文件
@@ -676,7 +676,7 @@ import "./assets/index.css"; // 引入index.css
 
 重启运行,发现bootstrap.css文件 运行报错 
 
-根据错误 需要在webpack.config.js增加对不识别文件的处理
+根据错误 需要在webpack.config.js增加对**`不识别文件`**的处理
 
 ```js	
 {
@@ -688,7 +688,9 @@ import "./assets/index.css"; // 引入index.css
 }
 ```
 
+将上述的配置文件 加入到webpack.config中即可
 
+![image-20200227112505728](assets/image-20200227112505728.png)
 
 ## 基础-示例项目-提取公共组件-头部-侧边栏-列表,并预览效果
 
@@ -697,11 +699,47 @@ import "./assets/index.css"; // 引入index.css
 **`路径`** 提取组件
 
 1. 新建vue文件
-
 2. 拷贝html静态内容到 template中
 3. 在app.vue中引入注册组件
 4. 注册在app.vue的组件中 
 5. 在app.vue的模板中使用注册组件 
+
+```vue
+<template>
+  <div id="app">
+    <!-- 头部组件 -->
+    <app-header></app-header>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- 侧边栏 -->
+        <app-sidebar></app-sidebar>
+        <!-- 英雄列表组件 -->
+        <app-list></app-list>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import appHeader from "./app-header"; // 引入头部组件
+import appSideBar from "./app-sidebar"; //引入侧边栏组件
+import appList from "./app-list"; // 引入英雄列表组件
+export default {
+  name: "app",
+  components: {
+    "app-header": appHeader, // 完成组件注册
+    "app-sidebar": appSideBar, // 完成侧边栏组件的注册
+    "app-list": appList // 完成对英雄列表的注册
+  }
+};
+</script>
+
+<style>
+</style>
+
+```
+
+
 
 ## 基础-示例项目-提取路由模块
 
@@ -722,7 +760,7 @@ import VueRouter from 'vue-router ' // 引用router
 3  使用router 
 
 ```js 
-Vue.use(VueRouter) // 使用router
+Vue.use(VueRouter) // 使用router  => 全局注册vue-router对象
 ```
 
 4   实例化 router 
@@ -736,32 +774,43 @@ routes:[] //实例化routes
 5  配置理由表
 
 ```js
+//  专门放置路由的
+// 为什么要把文件命名index ?
+// import test from './router'  如果 router是一个文件夹的话 
+// import test from './router' 相当于 获取 import test from './router/index.js'文件
+// import test from './router'  等价于 import test from './router/index' 
+import Vue from 'vue'
+import VueRouter from 'vue-router'  // 引用路由对象
+import HeroList from '../views/heroes/hero-list'  // 单文件组件
+import weaponList from '../views/weapon/weapon-list'  // 单文件组件
+import GearList from '../views/gear/gear-list'  // 单文件组件
+
+Vue.use(VueRouter) // 全局注册
+
 const router = new VueRouter({
-routes: [
-{ path: "/heroes", component: AppList },
-{ path: "/foo", component: Foo },
-{ path: "/bar", component: Bar }
-] // 路由表
-}); // 实例化router
+    // 配置路由表
+    //  一般挂在路由上的组件 叫做 路由级组件
+    // 路由级组件一般放置在src/views目录
+    // views又可以新建文件夹 或者文件
+    routes: [{
+        path: '/heroes', // 定义路径 是自己定义的
+        component: HeroList
+    }, {
+        path: '/weapon',
+        component: weaponList  // 武器组件
+    }, {
+        path: '/gear',
+        component: GearList // 装备组件
+    }]
+})
+
+export default router // 导出一个变量
 ```
 **注意** 一般来说 路由表 需要单独一个文件   可以将router提取成一个js文件 
 
-6   提取 三个组件 appList(主要 )  Foo(组件) Bar(组件) 完善路由表
+6   提取 三个组件 hero-list(英雄列表)  weapon-list(武器列表) gearList(装备列表) 完善路由表
 
-```html
-<template>
-<div>Bar组件</div>
-</template>
-
-<script>
-export default {};
-</script>
-<style>
-</style>
-
-```
-
-7   在App.vue中假如路由承载视图
+7   在App.vue中路由承载视图**`router-view`**
 
 ```html
 <div>
@@ -774,6 +823,39 @@ export default {};
 </div>
  </div>
 ```
+
+8. router--link默认生成的就是a标签,**`但是`**我们可以改变router-link最终生成的标签
+
+> router-link  有一个属性 叫做 tag, 可以通过设置tag来改变 默认生成的标签 tag的值默认为**`a`**
+
+```vue
+<template>
+  <!-- 侧边栏导航组件 -->
+  <div class="col-sm-3 col-md-2 sidebar">
+    <ul class="nav nav-sidebar">
+      <!-- vuejs 中  tag属性可以改变 router-link中的生成默认标签-->
+      <router-link tag="li" to="/heroes">
+        <a href="#">英雄列表</a>
+      </router-link>
+      <router-link tag="li" to="/gear">
+        <a href="#">装备列表</a>
+      </router-link>
+      <router-link tag="li" to="/weapon">
+        <a href="#">武器列表</a>
+      </router-link>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style>
+</style>
+```
+
+
 
 ## 基础-示例项目-json-server-启动接口服务器
 
