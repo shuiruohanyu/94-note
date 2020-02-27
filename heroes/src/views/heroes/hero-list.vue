@@ -2,7 +2,8 @@
   <!-- 英雄列表组件 -->
   <div class>
     <h2 class="sub-header">英雄列表</h2>
-    <a class="btn btn-success" href="add.html">添加英雄</a>
+    <!-- 导航跳转 -->
+    <router-link class="btn btn-success" to="/add-edit">添加英雄</router-link>
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
@@ -20,7 +21,7 @@
             <td>{{ item.name }}</td>
             <td>{{ item.gender }}</td>
             <td>
-              <a href="edit.html">编辑</a> &nbsp;&nbsp;
+              <router-link :to="`/add-edit/${item.id}`">编辑</router-link>&nbsp;&nbsp;
               <a href="#" @click.prevent="delItem(item.id)">删除</a>
             </td>
           </tr>
