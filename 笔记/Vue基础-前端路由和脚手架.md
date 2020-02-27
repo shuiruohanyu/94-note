@@ -890,6 +890,11 @@ npm i -g json-server // 安装json-server
 json-server --watch db.json 
 ```
 
+如果想 改变端口
+
+```bash
+$  json-server -w -p  3002 db.json #以特定的端口号启动命令
+```
 
 ## 基础-示例项目-列表渲染
 
@@ -897,10 +902,10 @@ json-server --watch db.json
 
 >**`路径`**:
 >
->1 安装axios 插件 
+>1 安装 axios 插件 
 >
 >```bash
->npm i axios // 安装axios插件
+>$ npm i axios #安装axios插件
 >```
 >
 >2  英雄列表组件中引入 axios , 
@@ -912,32 +917,33 @@ json-server --watch db.json
 >3  定义数据list
 >
 >```js
->data() {
->return {
->list: []
->};
->}
+> data() {
+>    return {
+>      // 响应式数据
+>      list: [] // 接收英雄列表的数据
+>    }; // 因为组件数据是独立的
+>  }
 >```
 >
 >4  请求英雄列表的方法封装 
 >
 >```js
->loadData() {
->//restful规则
->axois.get("http:localhost:3000/heroes").then(result => {
->this.list = result.data;
->});
->}
+>    //  定义方法
+>    loadData() {
+>      axios.get("http://localhost:3001/heroes").then(result => {
+>        // 拿到了result数据 赋值给 list axios封装了一层数据 我们应该取data
+>        this.list = result.data;
+>      });
+>    }
 >```
 >
 >5  在事件中加入 请求方法
 >
 >```js
->// 实例完成事件
->created() {
->//可以加
->  this.loadData();
->},
+>  created() {
+>    // 实例创建完成事件
+>    this.loadData(); // 获取列表数据
+>  }
 >```
 >
 >6  渲染列表list
@@ -955,20 +961,19 @@ json-server --watch db.json
 >2 定义删除方法  实现删除逻辑
 >
 >```js
->// 定义删除方法
->// id为要删除id的方法
->delItem(id) {
->// restful规则
->if (confirm("确认删除此条数据")) {
->axios.delete("http://localhost:3000/heroes" + id).then(result => {
->    this.loadData(); // 刷新数据
->});
->}
->}
+>    delItem(id) {
+>      // 友好的提示一下
+>      if (confirm("您是否要删除此条数据啊?")) {
+>        // 调用删除接口
+>        axios.delete(`http://localhost:3001/heroes/${id}`).then(() => {
+>          // 如果删除成功了 会进入到then方法中
+>              this.loadData(); //重新拉取数据
+>        });
+>      }
 >```
->  
->  3  根据状态 进行刷新页面
 >
+>  3  根据状态 进行刷新页面
+>  
 >```js
 >this.loadData(); // 刷新数据
 >```
