@@ -987,36 +987,20 @@ $  json-server -w -p  3002 db.json #以特定的端口号启动命令
 >1 新建add-edit.vue组件 并写入静态内容
 >
 >```html
-><!-- 添加静态内容到template模板下 -->
-><div>
-><h2 class="sub-header">添加英雄</h2>
-><form>
-><div class="form-group">
-><label for="exampleInputEmail1">用户名</label>
-><!-- 使用v-model的方式来绑定表单 -->
-><input
->v-model="formData.name"
->type="text"
->class="form-control"
->id="exampleInputEmail1"
->placeholder="请输入姓名"
->/>
-></div>
-><div class="form-group">
-><label for="exampleInputPassword1">性别</label>
-><input
->v-model="formData.gender"
->type="text"
->class="form-control"
->id="exampleInputPassword1"
->placeholder="请输入性别"
->/>
-></div>
-><!-- 给添加英雄按钮注册一个事件 -->
-><button type="submit" class="btn btn-success" @click="addHero">添加英雄</button>
-></form>
-></div>
->
+>  <div>
+>    <h2 class="sub-header">添加英雄</h2>
+>    <form>
+>      <div class="form-group">
+>        <label for="exampleInputEmail1">姓名</label>
+>        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="请输入您的姓名" />
+>      </div>
+>      <div class="form-group">
+>        <label for="exampleInputPassword1">性别</label>
+>        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="请输入您的性别" />
+>      </div>
+>      <button class="btn btn-success">添加英雄</button>
+>    </form>
+>  </div>
 >```
 >
 >2  在路由表中配置添加功能的路由
@@ -1035,20 +1019,20 @@ $  json-server -w -p  3002 db.json #以特定的端口号启动命令
 >4  根据业务场景调整页面模板
 >
 >```html
-><div>
-><h2 class="sub-header">添加英雄</h2>
-><form>
-><div class="form-group">
-><label for="exampleInputEmail1">用户名</label>
-><input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入姓名" />
-></div>
-><div class="form-group">
-><label for="exampleInputPassword1">性别</label>
-><input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入性别" />
-></div>
-><button type="submit" class="btn btn-success">添加英雄</button>
-></form>
-></div>
+>  <div>
+>    <h2 class="sub-header">添加英雄</h2>
+>    <form>
+>      <div class="form-group">
+>        <label for="exampleInputEmail1">姓名</label>
+>        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="请输入您的姓名" />
+>      </div>
+>      <div class="form-group">
+>        <label for="exampleInputPassword1">性别</label>
+>        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="请输入您的性别" />
+>      </div>
+>      <button class="btn btn-success">添加英雄</button>
+>    </form>
+>  </div>
 >```
 >
 
@@ -1074,34 +1058,29 @@ $  json-server -w -p  3002 db.json #以特定的端口号启动命令
 >
 >```html
 ><!-- 给添加英雄按钮注册一个事件 -->
-><button type="submit" class="btn btn-success" @click.prevent="saveHero">添加英雄</button>
+>      <button @click.prevent="saveHero" class="btn btn-success">添加英雄</button>
+>
 >```
 >
 >3   实现 添加的前后逻辑
 >
 >```js
->// 添加英雄方法
->saveHero() {
->// 判断填报信息是否为空
->if (this.formData.name && this.formData.gender) {
->// 该判断条件是判断 当前的姓名和 性别都不为空
->// restful规则
->axios
->.post("http://localhost:3000/heroes", this.formData)
->.then(result => {
->// 注意这里添加成功的状态码 是 201
->if (result.status === 201) {
->// 添加成功之后 要跳转回列表页
->// 编程式导航
->  this.$router.push({ path: "/heroes" });
->  } else {
->    alert("添加失败");
+>    // 定义保存英雄方法
+>    saveHero() {
+>      // 首先应该判断 姓名和性别不能为空啊
+>      if (this.formData.name && this.formData.gender) {
+>        //  都存在才能保存
+>        // 调用新增接口 restful => get /put /post /delete
+>        axios.post("http://localhost:3001/heroes", this.formData).then(() => {
+>          // 一旦进入then 说明新增成功了
+>          // 回到列表页
+>          //
+>          this.$router.push("/heroes"); // 回到列表页
+>        });
+>      } else {
+>        alert("兄嘚,得填全啊");
+>      }
 >    }
->    });
->  } else {
->    alert("提交信息不能为空");
->  }
->}
 >```
 >
 >
@@ -1119,22 +1098,24 @@ $  json-server -w -p  3002 db.json #以特定的端口号启动命令
 2. 编辑按钮添加跳转路由的属性
 
 ```html
-<router-link class="btn btn-success" :to="`/add-edit/${item.id}`">编辑</router-link>
+  <router-link :to="`/add-edit/${item.id}`">编辑</router-link>
 ```
 
 3. 定义加载英雄方法  通过 $router.params来获取参数
 
 ```js
-// 加载英雄
-loadHero() {
-   const { id } = this.$route.params; // 通过参数获取id
-   if (id) {
-    //判断id
-   axios.get("http://localhost:3000/heroes/" + id).then(result => {
-     this.formData = result.data; // 获取数据并赋值给表单对象
-   });
-  }
-}
+    // 加载对应的英雄
+    loadHero() {
+      if (this.$route.params.id) {
+        // 如果id存在 表示 当前有id  表示当前是修改状态
+        axios
+          .get(`http://localhost:3001/heroes/${this.$route.params.id}`)
+          .then(result => {
+            //   获取到对应英雄的数据
+            this.formData = result.data; // 将数据赋值给formData
+          });
+      }
+    }
 ```
 
 4. 在初始化事件中 调用loadHero 方法
@@ -1149,7 +1130,35 @@ this.loadHero(); // 加载英雄
 5. 保存时 进行判断 是新增还是 编辑
 
    ```js
-   代码
+   saveHero() {
+         // 首先应该判断 姓名和性别不能为空啊
+         if (this.formData.name && this.formData.gender) {
+           //  都存在才能保存
+           // 调用新增接口 restful => get /put /post /delete
+           if (this.$route.params.id) {
+             // 应该调用 编辑接口
+             axios
+               .put(
+                 `http://localhost:3001/heroes/${this.$route.params.id}`,
+                 this.formData
+               )
+               .then(() => {
+                 // 一旦成功了 说明编辑成功了  回到列表页
+                 this.$router.push("/heroes"); // 回到列表页
+               });
+           } else {
+             // 应该调用新增接口
+             axios.post("http://localhost:3001/heroes", this.formData).then(() => {
+               // 一旦进入then 说明新增成功了
+               // 回到列表页
+               //
+               this.$router.push("/heroes"); // 回到列表页
+             });
+           }
+         } else {
+           alert("兄嘚,得填全啊");
+         }
+       },
    ```
 
 ## 基础-  示例项目-优化-axios统一导入和设置baseURL
