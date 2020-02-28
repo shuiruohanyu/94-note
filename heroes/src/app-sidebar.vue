@@ -12,6 +12,9 @@
       <router-link tag="li" to="/weapon">
         <a href="#">武器列表</a>
       </router-link>
+      <router-link tag="li" to="/life">
+        <a href="#">生命周期</a>
+      </router-link>
     </ul>
   </div>
 </template>

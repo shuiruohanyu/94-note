@@ -9,6 +9,7 @@ import HeroList from '../views/heroes/hero-list'  // 单文件组件
 import weaponList from '../views/weapon/weapon-list'  // 单文件组件
 import GearList from '../views/gear/gear-list'  // 单文件组件
 import AddEdit from '../views/heroes/add-edit' // 引入新增编辑组件
+import Life from '../views/life' // 引入生命周期组件
 Vue.use(VueRouter) // 全局注册
 
 const router = new VueRouter({
@@ -33,6 +34,9 @@ const router = new VueRouter({
     }, {
         path: '/add-edit/:id?', // 路径 给新增和编辑组件添加参数  加上问号的意思是 传不传id都能匹配
         component: AddEdit // 配置组件
+    }, {
+        path: '/life',  // 地址
+        component: Life
     }]
 })
 
