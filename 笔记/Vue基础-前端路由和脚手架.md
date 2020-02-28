@@ -1123,7 +1123,7 @@ $  json-server -w -p  3002 db.json #以特定的端口号启动命令
 ```js
 // 实例完成事件
 created() {
-this.loadHero(); // 加载英雄
+  this.loadHero(); // 加载英雄
 }
 ```
 
@@ -1165,15 +1165,15 @@ this.loadHero(); // 加载英雄
 
 **`目标-任务  `**实现axios的统一导入
 
-1. 在入口main.js文件中引入axios,并给全局Vue对象的原型链赋值 
+1. 在入口main.js文件中引入axios,并给全局Vue对象的原型属性赋值 
 
  ```js
 Vue.prototype.$axios = axios; //所有的实例都直接共享拥有了 这个方法
  ```
 
-> 设置完成后,在组件的任意位置就可以通过 **`this.$axios`** 获取axios对象 并进行对象
+> 设置完成后,在组件的任意位置就可以通过 **`this.$axios`** 获取axios对象 并进行对象请求
 
-2. 我们可以统一设置axios的**`请求头`**地址 baseUR
+2. 我们可以统一设置axios的**`请求头`**地址 baseURL
 
    ```js
    axios.defaults.baseURL = "http://localhost:3000"; // 设置共享的方法
@@ -1204,18 +1204,28 @@ linkActiveClass: "active", // active为bootstrap中的 一个class样式
 2. 编写 过渡效果
 
    ```css
-   .slide-enter,
-   .slide-leave-to {
-   opacity: 0;
+   /* 2.编写 动画样式 */
+   .v-enter {
+     /* 进入时 是透明 */
+     opacity: 0;
    }
-   .slide-enter-to,
-   .slide-leave {
-   opacity: 1;
-   }
-   .slide-enter-active {
-   transition: all 1s;
+   .v-enter-active {
+     /* 写过渡 */
+     transition: all 0.5s;
    }
    ```
+
+>对router-view的动画 写一个进入 或者离开就可以 
+
+为什么?
+
+> 因为router-view 切换组件 是一个组件进入 , 一个组件离开, 会有两个组件同时动画
+
+如果你有多个动画, 你需要给transition一个name名称, 因为如果都给name,那么大家的动作样式都是
+
+.v-enter/ .v-enter-acitve 
+
+样式就会重复
 
 ## 生命周期-钩子函数
 

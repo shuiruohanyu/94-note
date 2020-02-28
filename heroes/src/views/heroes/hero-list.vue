@@ -33,7 +33,7 @@
 
 <script>
 // 引入axios插件
-import axios from "axios";
+// import axios from "axios";
 export default {
   name: "hero-list",
   data() {
@@ -45,7 +45,12 @@ export default {
   methods: {
     //  定义方法
     loadData() {
-      axios.get("http://localhost:3001/heroes").then(result => {
+      // 将 原来的地址 优化成 新地址
+      // this.$axios.get("http://localhost:3001/heroes").then(result => {
+      //   // 拿到了result数据 赋值给 list axios封装了一层数据 我们应该取data
+      //   this.list = result.data;
+      // });
+      this.$axios.get("/heroes").then(result => {
         // 拿到了result数据 赋值给 list axios封装了一层数据 我们应该取data
         this.list = result.data;
       });
@@ -54,7 +59,7 @@ export default {
       // 友好的提示一下
       if (confirm("您是否要删除此条数据啊?")) {
         // 调用删除接口
-        axios.delete(`http://localhost:3001/heroes/${id}`).then(() => {
+        this.$axios.delete(`/heroes/${id}`).then(() => {
           // 如果删除成功了 会进入到then方法中
           this.loadData(); //重新拉取数据
         });

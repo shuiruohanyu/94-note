@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 export default {
   data() {
     return {
@@ -50,18 +50,15 @@ export default {
         // 调用新增接口 restful => get /put /post /delete
         if (this.$route.params.id) {
           // 应该调用 编辑接口
-          axios
-            .put(
-              `http://localhost:3001/heroes/${this.$route.params.id}`,
-              this.formData
-            )
+          this.$axios
+            .put(`/heroes/${this.$route.params.id}`, this.formData)
             .then(() => {
               // 一旦成功了 说明编辑成功了  回到列表页
               this.$router.push("/heroes"); // 回到列表页
             });
         } else {
           // 应该调用新增接口
-          axios.post("http://localhost:3001/heroes", this.formData).then(() => {
+          this.$axios.post("/heroes", this.formData).then(() => {
             // 一旦进入then 说明新增成功了
             // 回到列表页
             //
@@ -76,12 +73,10 @@ export default {
     loadHero() {
       if (this.$route.params.id) {
         // 如果id存在 表示 当前有id  表示当前是修改状态
-        axios
-          .get(`http://localhost:3001/heroes/${this.$route.params.id}`)
-          .then(result => {
-            //   获取到对应英雄的数据
-            this.formData = result.data; // 将数据赋值给formData
-          });
+        this.$axios.get(`/heroes/${this.$route.params.id}`).then(result => {
+          //   获取到对应英雄的数据
+          this.formData = result.data; // 将数据赋值给formData
+        });
       }
     }
   },

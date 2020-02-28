@@ -16,6 +16,8 @@ const router = new VueRouter({
     //  一般挂在路由上的组件 叫做 路由级组件
     // 路由级组件一般放置在src/views目录
     // views又可以新建文件夹 或者文件
+    // 配置激活样式的class
+    linkActiveClass: 'active', // 为什么要换成active 因为bootstrap中有一个现成的active样式
     routes: [{
         path: '/',
         redirect: '/heroes'  // 强制跳转到英雄列表

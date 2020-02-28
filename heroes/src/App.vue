@@ -8,7 +8,11 @@
         <app-sidebar></app-sidebar>
         <!-- 这个位置应该是 容器 承载组件的变化 -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <router-view></router-view>
+          <!-- 1.用transition包裹容器组件 -->
+          <transition>
+            <!-- 为什么能动画呢? 因为router-view切换组件的时候 是一个组件显示 一个组件y隐藏 -->
+            <router-view></router-view>
+          </transition>
         </div>
         <!-- 英雄列表组件 -->
         <!-- <app-list></app-list> -->
@@ -32,4 +36,13 @@ export default {
 </script>
 
 <style>
+/* 2.编写 动画样式 */
+.v-enter {
+  /* 进入时 是透明 */
+  opacity: 0;
+}
+.v-enter-active {
+  /* 写过渡 */
+  transition: all 0.5s;
+}
 </style>
